@@ -1,0 +1,25 @@
+{
+  "name": "tuneflow-plugin-basic",
+  "version": "0.0.1",
+  "description": "Basic TuneFlow plugins",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/andantei/tuneflow-plugin-basic.git"
+  },
+  "keywords": [
+    "tuneflow",
+    "music",
+    "arrangement",
+    "programatic",
+    "ai"
+  ],
+  "author": "Andantei",
+  "license": "MIT",
+  "dependencies": {
+    "tuneflow": "^0.0.2"
+  }
+}

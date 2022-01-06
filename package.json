@@ -20,6 +20,6 @@
   "author": "Andantei",
   "license": "MIT",
   "dependencies": {
-    "tuneflow": "^0.0.2"
+    "tuneflow": "^0.0.3"
   }
 }

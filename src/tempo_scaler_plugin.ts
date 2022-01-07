@@ -19,7 +19,7 @@ export class TempoScaler extends TuneflowPlugin {
 
   static pluginDisplayName(): LabelText {
     return {
-      zh: '调节速度',
+      zh: '播放速度',
       en: 'Playback Speed',
     };
   }
@@ -28,8 +28,8 @@ export class TempoScaler extends TuneflowPlugin {
     return {
       scale: {
         displayName: {
-          zh: '比率(%)',
-          en: 'Ratio(%)',
+          zh: '速率(%)',
+          en: 'Speed Raio(%)',
         },
         defaultValue: 100,
         widget: {

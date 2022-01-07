@@ -19,8 +19,8 @@ export class TempoScaler extends TuneflowPlugin {
 
   static pluginDisplayName(): LabelText {
     return {
-      zh: '节奏调节器',
-      en: 'Scale Tempo',
+      zh: '调节速度',
+      en: 'Playback Speed',
     };
   }
 
@@ -28,16 +28,17 @@ export class TempoScaler extends TuneflowPlugin {
     return {
       scale: {
         displayName: {
-          zh: '节奏 (BPM)',
-          en: 'Tempo (BPM)',
+          zh: '比率(%)',
+          en: 'Ratio(%)',
         },
-        defaultValue: 1,
+        defaultValue: 100,
         widget: {
           type: WidgetType.Slider,
           config: {
-            step: 0.1,
-            minValue: 0.1,
-            maxValue: 5,
+            step: 10,
+            minValue: 10,
+            maxValue: 500,
+            unit: '%',
           } as SliderWidgetConfig,
         },
       },
@@ -52,7 +53,7 @@ export class TempoScaler extends TuneflowPlugin {
     params: { [paramName: string]: any },
   ): Promise<void | { [artifactId: string]: any }> {
     for (const tempoEvent of song.getTempoChanges()) {
-      song.updateTempo(tempoEvent, tempoEvent.getBpm() * params.scale);
+      song.updateTempo(tempoEvent, (tempoEvent.getBpm() * params.scale) / 100);
     }
   }
 }

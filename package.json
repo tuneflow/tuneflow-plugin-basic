@@ -1,6 +1,6 @@
 {
   "name": "tuneflow-plugin-basic",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Basic TuneFlow plugins",
   "main": "src/index.ts",
   "scripts": {
@@ -19,7 +19,7 @@
   ],
   "author": "Andantei",
   "license": "MIT",
-  "dependencies": {
-    "tuneflow": "^0.0.3"
+  "peerDependencies": {
+    "tuneflow": "*"
   }
 }

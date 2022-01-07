@@ -22,10 +22,10 @@ export class TempoScaler extends TuneflowPlugin {
     return {
       scale: {
         displayName: 'Scale',
+        defaultValue: 1,
         widget: {
           type: WidgetType.Slider,
           config: {
-            defaultValue: 1,
             step: 0.1,
             minValue: 0.1,
             maxValue: 5,

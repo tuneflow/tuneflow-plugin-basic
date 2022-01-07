@@ -1,4 +1,4 @@
-import type { ParamDescriptor, SliderWidgetConfig, Song } from 'tuneflow';
+import type { LabelText, ParamDescriptor, SliderWidgetConfig, Song } from 'tuneflow';
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class TempoScaler extends TuneflowPlugin {
@@ -10,18 +10,27 @@ export class TempoScaler extends TuneflowPlugin {
     return 'tempo-scaler';
   }
 
-  static providerDisplayName(): string {
-    return 'Andantei';
+  static providerDisplayName(): LabelText {
+    return {
+      zh: 'Andantei行板',
+      en: 'Andantei',
+    };
   }
 
-  static pluginDisplayName(): string {
-    return 'Tempo Scaler';
+  static pluginDisplayName(): LabelText {
+    return {
+      zh: '节奏调节器',
+      en: 'Scale Tempo',
+    };
   }
 
   params(): { [paramName: string]: ParamDescriptor } {
     return {
       scale: {
-        displayName: 'Scale',
+        displayName: {
+          zh: '节奏 (BPM)',
+          en: 'Tempo (BPM)',
+        },
         defaultValue: 1,
         widget: {
           type: WidgetType.Slider,
@@ -38,7 +47,7 @@ export class TempoScaler extends TuneflowPlugin {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async run(
     song: Song,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     inputs: { [inputName: string]: any },
     params: { [paramName: string]: any },
   ): Promise<void | { [artifactId: string]: any }> {

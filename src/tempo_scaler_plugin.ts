@@ -28,8 +28,8 @@ export class TempoScaler extends TuneflowPlugin {
     return {
       scale: {
         displayName: {
-          zh: '速率(%)',
-          en: 'Speed Raio(%)',
+          zh: '速率',
+          en: 'Speed Ratio',
         },
         defaultValue: 100,
         widget: {

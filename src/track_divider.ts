@@ -54,6 +54,10 @@ export class TrackDivider extends TuneflowPlugin {
           type: WidgetType.Pitch,
           config: {} as PitchWidgetConfig,
         },
+        description: {
+          zh: '从此音高以上（包含）划分为一轨，其余音符划分为一轨。',
+          en: 'Notes higher than (including) this pitch are separated to one track. Other notes are separated to another track.',
+        },
       },
     };
   }

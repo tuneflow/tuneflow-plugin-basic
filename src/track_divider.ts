@@ -94,8 +94,16 @@ export class TrackDivider extends TuneflowPlugin {
     const bassTrack = song.createTrack({
       index: trackIndex,
     });
+    bassTrack.setInstrument({
+      program: track.getInstrument().getProgram(),
+      isDrum: track.getInstrument().getIsDrum(),
+    });
     const trebleTrack = song.createTrack({
       index: trackIndex,
+    });
+    trebleTrack.setInstrument({
+      program: track.getInstrument().getProgram(),
+      isDrum: track.getInstrument().getIsDrum(),
     });
     for (const note of track.getNotes()) {
       const noteParam = {

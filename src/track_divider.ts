@@ -1,11 +1,10 @@
 import type {
   LabelText,
   ParamDescriptor,
-  PitchWidgetConfig,
   Song,
   SongAccess,
   Track,
-  TrackSelectorWidgetConfig,
+  TrackPitchSelectorWidgetConfig,
 } from 'tuneflow';
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
 
@@ -34,30 +33,24 @@ export class TrackDivider extends TuneflowPlugin {
 
   params(): { [paramName: string]: ParamDescriptor } {
     return {
-      track: {
-        displayName: {
-          zh: '轨道',
-          en: 'Track',
-        },
-        widget: {
-          type: WidgetType.TrackSelector,
-          config: {
-            multiSelection: false,
-          } as TrackSelectorWidgetConfig,
-        },
-      },
-      pitch: {
+      trackPitch: {
         displayName: {
           zh: '分割音高',
           en: 'Dividing Pitch',
         },
-        defaultValue: 60,
+        defaultValue: {
+          track: undefined,
+          pitch: 60,
+        },
         widget: {
-          type: WidgetType.Pitch,
-          config: {} as PitchWidgetConfig,
+          type: WidgetType.TrackPitchSelector,
+          config: {
+            trackSelectorConfig: {},
+            pitchSelectorConfig: {},
+          } as TrackPitchSelectorWidgetConfig,
         },
         description: {
-          zh: '将本轨道分成高低声部两轨：从此音高以上（包含）划分为高音 (Treble) 轨，其余音符划分为低音 (Bass) 轨。',
+          zh: '将选中的轨道分成高低声部两轨：从此音高以上（包含）划分为高音 (Treble) 轨，其余音符划分为低音 (Bass) 轨。',
           en: 'Track will be divided into Treble and Bass: Treble contains notes higher(including) this pitch, and Bass contains notes lower than this pitch.',
         },
       },
@@ -78,7 +71,8 @@ export class TrackDivider extends TuneflowPlugin {
     inputs: { [inputName: string]: any },
     params: { [paramName: string]: any },
   ): Promise<void | { [artifactId: string]: any }> {
-    const trackId = this.getParam<string>(params, 'track');
+    const trackPitch = this.getParam<any>(params, 'trackPitch');
+    const trackId = trackPitch.track as string;
     let track: Track | undefined;
     let trackIndex = -1;
     for (trackIndex = 0; trackIndex < song.getTracks().length; trackIndex += 1) {
@@ -87,7 +81,7 @@ export class TrackDivider extends TuneflowPlugin {
         break;
       }
     }
-    const pitch = this.getParam<number>(params, 'pitch');
+    const pitch = trackPitch.pitch as number;
     if (!track) {
       return;
     }

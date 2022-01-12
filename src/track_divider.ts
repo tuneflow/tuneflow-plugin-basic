@@ -31,6 +31,13 @@ export class TrackDivider extends TuneflowPlugin {
     };
   }
 
+  static pluginDescription(): LabelText | null {
+    return {
+      zh: '将选中的轨道分成高低声部两轨。',
+      en: 'Divide the track into Treble and Bass by a given pitch.',
+    };
+  }
+
   params(): { [paramName: string]: ParamDescriptor } {
     return {
       trackPitch: {

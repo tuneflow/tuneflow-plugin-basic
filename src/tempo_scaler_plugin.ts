@@ -24,6 +24,13 @@ export class TempoScaler extends TuneflowPlugin {
     };
   }
 
+  static pluginDescription(): LabelText | null {
+    return {
+      zh: '按比率调整整首歌的播放速度',
+      en: 'Adjust the playback speed of the whole song by a given ratio',
+    };
+  }
+
   params(): { [paramName: string]: ParamDescriptor } {
     return {
       scale: {

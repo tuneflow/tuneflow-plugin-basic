@@ -83,7 +83,7 @@ export class TrackDivider extends TuneflowPlugin {
     }
     const pitch = trackPitch.pitch as number;
     if (!track) {
-      return;
+      throw new Error('Track is not ready');
     }
     const bassTrack = song.createTrack({
       index: trackIndex,

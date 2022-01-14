@@ -52,11 +52,8 @@ export class TempoScaler extends TuneflowPlugin {
     };
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async run(
     song: Song,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    inputs: { [inputName: string]: any },
     params: { [paramName: string]: any },
   ): Promise<void | { [artifactId: string]: any }> {
     for (const tempoEvent of song.getTempoChanges()) {

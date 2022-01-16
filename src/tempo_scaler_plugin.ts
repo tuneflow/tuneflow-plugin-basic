@@ -52,10 +52,7 @@ export class TempoScaler extends TuneflowPlugin {
     };
   }
 
-  async run(
-    song: Song,
-    params: { [paramName: string]: any },
-  ): Promise<void | { [artifactId: string]: any }> {
+  async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     for (const tempoEvent of song.getTempoChanges()) {
       song.updateTempo(tempoEvent, (tempoEvent.getBpm() * params.scale) / 100);
     }

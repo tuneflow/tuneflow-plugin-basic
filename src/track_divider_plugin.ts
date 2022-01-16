@@ -71,10 +71,7 @@ export class TrackDivider extends TuneflowPlugin {
     };
   }
 
-  async run(
-    song: Song,
-    params: { [paramName: string]: any },
-  ): Promise<void | { [artifactId: string]: any }> {
+  async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     const trackPitch = this.getParam<any>(params, 'trackPitch');
     const trackId = trackPitch.track as string;
     let track: Track | undefined;

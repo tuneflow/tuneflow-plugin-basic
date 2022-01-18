@@ -48,8 +48,11 @@ export class TrackAdjust extends TuneflowPlugin {
         defaultValue: undefined,
         widget: {
           type: WidgetType.TrackSelector,
-          config: {} as TrackSelectorWidgetConfig,
+          config: {
+            alwaysShowTrackInfo: true,
+          } as TrackSelectorWidgetConfig,
         },
+        adjustable: false,
       },
       volume: {
         displayName: {

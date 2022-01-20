@@ -9,28 +9,22 @@ import type {
 } from 'tuneflow';
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
 import _ from 'underscore';
-import { preset as musicgatewayPreset } from './add_drum_track_plugin_presets/musicgateway.com';
+// Dynamic import all presets since they are pretty large in size.
+const musicgatewayPresets = () => import('./add_drum_track_plugin_presets/musicgateway.com');
 
 const drumPatterns = {
   musicgateway: {
     credit: 'musicgateway.com',
-    patterns: musicgatewayPreset,
+    patterns: musicgatewayPresets,
   },
 };
-const drumOptions: SelectWidgetOption[] = _.flatten(
-  _.keys(drumPatterns).map(drumPatternsKey => {
-    const patternsConfig = (drumPatterns as any)[drumPatternsKey];
-    return patternsConfig.patterns.map((item: any, index: number) => {
-      console.log(item);
-      return {
-        label: item[0],
-        value: `${drumPatternsKey}~_~${index}`,
-      };
-    });
-  }),
-);
 
 export class AddDrumTrack extends TuneflowPlugin {
+  private drumOptions: SelectWidgetOption[] = [];
+
+  static LOAD_PRESETS_PROMISE: Promise<void> | null = null;
+  static PRESETS_LOADED = false;
+
   static providerId(): string {
     return 'andantei';
   }
@@ -57,6 +51,48 @@ export class AddDrumTrack extends TuneflowPlugin {
     return null;
   }
 
+  async init(): Promise<void> {
+    if (!AddDrumTrack.LOAD_PRESETS_PROMISE) {
+      AddDrumTrack.LOAD_PRESETS_PROMISE = new Promise((resolve, reject) => {
+        Promise.all(
+          _.keys(drumPatterns).map(async key => {
+            const drumPatternsEntry = (drumPatterns as any)[key];
+            drumPatternsEntry.patterns = (await drumPatternsEntry.patterns()).preset;
+          }),
+        ).then(
+          () => {
+            AddDrumTrack.PRESETS_LOADED = true;
+            resolve();
+          },
+          () => {
+            reject();
+          },
+        );
+      });
+    }
+
+    try {
+      await AddDrumTrack.LOAD_PRESETS_PROMISE;
+    } catch (e) {
+      console.error(e);
+    }
+
+    if (AddDrumTrack.PRESETS_LOADED) {
+      this.drumOptions = _.flatten(
+        _.keys(drumPatterns).map(drumPatternsKey => {
+          const patternsConfig = (drumPatterns as any)[drumPatternsKey];
+          return patternsConfig.patterns.map((item: any, index: number) => {
+            console.log(item);
+            return {
+              label: item[0],
+              value: `${drumPatternsKey}~_~${index}`,
+            };
+          });
+        }),
+      );
+    }
+  }
+
   params(): { [paramName: string]: ParamDescriptor } {
     return {
       preset: {
@@ -72,7 +108,7 @@ export class AddDrumTrack extends TuneflowPlugin {
         widget: {
           type: WidgetType.Select,
           config: {
-            options: drumOptions,
+            options: this.drumOptions,
             placeholder: {
               zh: '选择鼓点类型',
               en: 'Select a drum pattern',

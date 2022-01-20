@@ -73,7 +73,6 @@ export class LayerMultiplier extends TuneflowPlugin {
   songAccess(): SongAccess {
     return {
       createTrack: true,
-      removeTrack: true,
     };
   }
 

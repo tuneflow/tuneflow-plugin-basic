@@ -5,3 +5,5 @@ export { TrackMerger } from './track_merger_plugin';
 export { LayerMultiplier } from './layer_multiplier_plugin';
 export { AddDrumTrack } from './add_drum_track_plugin';
 export { TrackRemover } from './remove_track_plugin';
+export { TrackMove } from './track_move_plugin';
+export { TrackTrim } from './track_trim_plugin';

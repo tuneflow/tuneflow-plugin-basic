@@ -29,6 +29,11 @@ export class TrackRemover extends TuneflowPlugin {
       en: 'Delete Track',
     };
   }
+
+  static allowReset(): boolean {
+    return false;
+  }
+
   songAccess(): SongAccess {
     return {
       removeTrack: true,

@@ -30,6 +30,10 @@ export class TrackTrim extends TuneflowPlugin {
     };
   }
 
+  static allowReset(): boolean {
+    return false;
+  }
+
   params(): { [paramName: string]: ParamDescriptor } {
     return {
       trackId: {
@@ -45,6 +49,7 @@ export class TrackTrim extends TuneflowPlugin {
           } as TrackSelectorWidgetConfig,
         },
         adjustable: false,
+        hidden: true,
       },
       trackStartTick: {
         displayName: {

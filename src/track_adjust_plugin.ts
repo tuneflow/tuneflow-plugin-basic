@@ -38,6 +38,10 @@ export class TrackAdjust extends TuneflowPlugin {
     };
   }
 
+  static allowReset(): boolean {
+    return false;
+  }
+
   params(): { [paramName: string]: ParamDescriptor } {
     return {
       trackId: {
@@ -48,11 +52,10 @@ export class TrackAdjust extends TuneflowPlugin {
         defaultValue: undefined,
         widget: {
           type: WidgetType.TrackSelector,
-          config: {
-            alwaysShowTrackInfo: true,
-          } as TrackSelectorWidgetConfig,
+          config: {} as TrackSelectorWidgetConfig,
         },
         adjustable: false,
+        hidden: true,
       },
       volume: {
         displayName: {
@@ -68,6 +71,7 @@ export class TrackAdjust extends TuneflowPlugin {
             step: 1,
           } as SliderWidgetConfig,
         },
+        hidden: true,
       },
       instrument: {
         displayName: {
@@ -82,6 +86,7 @@ export class TrackAdjust extends TuneflowPlugin {
           type: WidgetType.InstrumentSelector,
           config: {} as InstrumentSelectorWidgetConfig,
         },
+        hidden: true,
       },
     };
   }

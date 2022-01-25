@@ -30,6 +30,10 @@ export class TrackMove extends TuneflowPlugin {
     };
   }
 
+  static allowReset(): boolean {
+    return false;
+  }
+
   params(): { [paramName: string]: ParamDescriptor } {
     return {
       trackId: {

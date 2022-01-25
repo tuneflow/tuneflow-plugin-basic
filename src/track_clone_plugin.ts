@@ -24,6 +24,10 @@ export class TrackClone extends TuneflowPlugin {
     };
   }
 
+  static allowReset(): boolean {
+    return false;
+  }
+
   params(): { [paramName: string]: ParamDescriptor } {
     return {
       trackIds: {

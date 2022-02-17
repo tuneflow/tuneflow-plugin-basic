@@ -1,4 +1,5 @@
 import type {
+  InputWidgetConfig,
   InstrumentSelectorWidgetConfig,
   LabelText,
   ParamDescriptor,
@@ -6,7 +7,7 @@ import type {
   Song,
   TrackSelectorWidgetConfig,
 } from 'tuneflow';
-import { TuneflowPlugin, WidgetType } from 'tuneflow';
+import { TuneflowPlugin, WidgetType, decodeAudioPluginTuneflowId } from 'tuneflow';
 
 export class TrackAdjust extends TuneflowPlugin {
   static providerId(): string {
@@ -88,6 +89,18 @@ export class TrackAdjust extends TuneflowPlugin {
         },
         hidden: true,
       },
+      samplerPluginId: {
+        displayName: {
+          zh: '音源插件',
+          en: 'Sampler Plugin',
+        },
+        defaultValue: null,
+        widget: {
+          type: WidgetType.Input,
+          config: {} as InputWidgetConfig,
+        },
+        hidden: true,
+      },
     };
   }
 
@@ -95,6 +108,7 @@ export class TrackAdjust extends TuneflowPlugin {
     const trackId = this.getParam<string>(params, 'trackId');
     const volume = this.getParam<number>(params, 'volume');
     const instrument = this.getParam<any>(params, 'instrument');
+    const samplerPluginId = this.getParam<string>(params, 'samplerPluginId');
     const track = song.getTrackById(trackId);
     if (!track) {
       throw new Error('Track not ready');
@@ -104,5 +118,9 @@ export class TrackAdjust extends TuneflowPlugin {
       program: instrument.program,
       isDrum: instrument.isDrum,
     });
+    if (samplerPluginId) {
+      const audioPlugin = decodeAudioPluginTuneflowId(samplerPluginId);
+      track.setSamplerPlugin(audioPlugin);
+    }
   }
 }

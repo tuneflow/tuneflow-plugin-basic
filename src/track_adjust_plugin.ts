@@ -89,7 +89,7 @@ export class TrackAdjust extends TuneflowPlugin {
         },
         hidden: true,
       },
-      samplerPluginId: {
+      samplerPlugin: {
         displayName: {
           zh: '音源插件',
           en: 'Sampler Plugin',
@@ -108,7 +108,7 @@ export class TrackAdjust extends TuneflowPlugin {
     const trackId = this.getParam<string>(params, 'trackId');
     const volume = this.getParam<number>(params, 'volume');
     const instrument = this.getParam<any>(params, 'instrument');
-    const samplerPluginId = this.getParam<string>(params, 'samplerPluginId');
+    const samplerPlugin = this.getParam<any>(params, 'samplerPlugin');
     const track = song.getTrackById(trackId);
     if (!track) {
       throw new Error('Track not ready');
@@ -118,8 +118,9 @@ export class TrackAdjust extends TuneflowPlugin {
       program: instrument.program,
       isDrum: instrument.isDrum,
     });
-    if (samplerPluginId) {
-      const audioPlugin = decodeAudioPluginTuneflowId(samplerPluginId);
+    if (samplerPlugin) {
+      const audioPlugin = decodeAudioPluginTuneflowId(samplerPlugin.pluginTfId);
+      audioPlugin.setIsEnabled(samplerPlugin.isEnabled);
       track.setSamplerPlugin(audioPlugin);
     }
   }

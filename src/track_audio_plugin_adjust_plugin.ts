@@ -9,13 +9,13 @@ import type {
 } from 'tuneflow';
 import { TuneflowPlugin, WidgetType, decodeAudioPluginTuneflowId } from 'tuneflow';
 
-export class TrackAdjust extends TuneflowPlugin {
+export class TrackAudioPluginAdjust extends TuneflowPlugin {
   static providerId(): string {
     return 'andantei';
   }
 
   static pluginId(): string {
-    return 'track-adjust';
+    return 'track-audio-plugin-adjust';
   }
 
   static providerDisplayName(): LabelText {
@@ -27,15 +27,15 @@ export class TrackAdjust extends TuneflowPlugin {
 
   static pluginDisplayName(): LabelText {
     return {
-      zh: '调整轨道',
-      en: 'Track Adjustment',
+      zh: '调整音源/音效插件',
+      en: 'Audio Plugin Adjustment',
     };
   }
 
   static pluginDescription(): LabelText | null {
     return {
-      zh: '调整选中轨道的音量，乐器等',
-      en: 'Adjust the volume, instrument, etc. of the track',
+      zh: '调整选中轨道的音源/音效插件',
+      en: 'Adjust the audio tracks of the track',
     };
   }
 
@@ -58,34 +58,15 @@ export class TrackAdjust extends TuneflowPlugin {
         adjustable: false,
         hidden: true,
       },
-      volume: {
+      samplerPlugin: {
         displayName: {
-          zh: '音量',
-          en: 'Volume',
+          zh: '音源插件',
+          en: 'Sampler Plugin',
         },
-        defaultValue: 100,
+        defaultValue: null,
         widget: {
-          type: WidgetType.Slider,
-          config: {
-            minValue: 0,
-            maxValue: 100,
-            step: 1,
-          } as SliderWidgetConfig,
-        },
-        hidden: true,
-      },
-      instrument: {
-        displayName: {
-          zh: '乐器',
-          en: 'Instrument',
-        },
-        defaultValue: {
-          program: 0,
-          isDrum: false,
-        },
-        widget: {
-          type: WidgetType.InstrumentSelector,
-          config: {} as InstrumentSelectorWidgetConfig,
+          type: WidgetType.Input,
+          config: {} as InputWidgetConfig,
         },
         hidden: true,
       },
@@ -94,16 +75,15 @@ export class TrackAdjust extends TuneflowPlugin {
 
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     const trackId = this.getParam<string>(params, 'trackId');
-    const volume = this.getParam<number>(params, 'volume');
-    const instrument = this.getParam<any>(params, 'instrument');
+    const samplerPlugin = this.getParam<any>(params, 'samplerPlugin');
     const track = song.getTrackById(trackId);
     if (!track) {
       throw new Error('Track not ready');
     }
-    track.setVolume(volume / 100);
-    track.setInstrument({
-      program: instrument.program,
-      isDrum: instrument.isDrum,
-    });
+    if (samplerPlugin) {
+      const audioPlugin = decodeAudioPluginTuneflowId(samplerPlugin.tfId);
+      audioPlugin.setIsEnabled(samplerPlugin.isEnabled);
+      track.setSamplerPlugin(audioPlugin);
+    }
   }
 }

@@ -8,3 +8,4 @@ export { TrackRemover } from './remove_track_plugin';
 export { TrackMove } from './track_move_plugin';
 export { TrackTrim } from './track_trim_plugin';
 export { TrackClone } from './track_clone_plugin';
+export { TrackAudioPluginAdjust } from './track_audio_plugin_adjust_plugin';

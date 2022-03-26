@@ -1,9 +1,7 @@
 import type {
   InputWidgetConfig,
-  InstrumentSelectorWidgetConfig,
   LabelText,
   ParamDescriptor,
-  SliderWidgetConfig,
   Song,
   TrackSelectorWidgetConfig,
 } from 'tuneflow';
@@ -80,7 +78,7 @@ export class TrackAudioPluginAdjust extends TuneflowPlugin {
     if (!track) {
       throw new Error('Track not ready');
     }
-    if (samplerPlugin) {
+    if (samplerPlugin && samplerPlugin.tfId) {
       const audioPlugin = decodeAudioPluginTuneflowId(samplerPlugin.tfId);
       audioPlugin.setIsEnabled(samplerPlugin.isEnabled);
       track.setSamplerPlugin(audioPlugin);

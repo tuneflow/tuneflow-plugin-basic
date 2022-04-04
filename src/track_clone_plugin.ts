@@ -58,28 +58,7 @@ export class TrackClone extends TuneflowPlugin {
       if (!track) {
         throw new Error(`Track ${trackId} not ready`);
       }
-      const trackIndex = song.getTrackIndex(trackId);
-      const newTrack = song.createTrack({
-        index: trackIndex + 1,
-      });
-      newTrack.setInstrument({
-        program: track.getInstrument().getProgram(),
-        isDrum: track.getInstrument().getIsDrum(),
-      });
-      newTrack.setVolume(track.getVolume());
-      newTrack.setVolume(track.getVolume());
-
-      for (const note of track.getNotes()) {
-        const noteParam = {
-          pitch: note.getPitch(),
-          velocity: note.getVelocity(),
-          startTick: note.getStartTick(),
-          endTick: note.getEndTick(),
-        };
-        newTrack.createNote(noteParam);
-      }
-      newTrack.adjustTrackLeft(track.getTrackStartTick());
-      newTrack.adjustTrackRight(track.getTrackEndTick());
+      song.cloneTrack(track);
     }
   }
 }

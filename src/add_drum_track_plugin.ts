@@ -157,18 +157,26 @@ export class AddDrumTrack extends TuneflowPlugin {
     });
     let firstNoteTick = Number.MAX_VALUE;
     for (const track of song.getTracks()) {
-      if (track.getNotes().length > 0) {
-        firstNoteTick = Math.min(track.getNotes()[0].getStartTick(), firstNoteTick);
+      if (track.getClips().length > 0 && track.getClips()[0].getNotes().length > 0) {
+        firstNoteTick = Math.min(track.getClips()[0].getNotes()[0].getStartTick(), firstNoteTick);
       }
     }
 
     const lastTick = song.getLastTick();
+    const newClip = newTrack.createClip({
+      clipStartTick: 0,
+      sortedNotes: [],
+    });
+    newClip.adjustClipRange(firstNoteTick, lastTick);
     let lastEndTick = firstNoteTick;
     let reachedEnd = false;
 
     while (!reachedEnd) {
       const offset = lastEndTick;
       for (const track of drumPattern.tracks) {
+        // This track.notes is an exception:
+        // We use a special format to save drum patterns,
+        // which simplifies track.clips.notes to track.notes.
         for (const note of track.notes) {
           const pitch = note[1];
           const velocity = Math.max(64, note[3]);
@@ -187,7 +195,7 @@ export class AddDrumTrack extends TuneflowPlugin {
             startTick,
             endTick,
           };
-          newTrack.createNote(noteParam);
+          newClip.createNote(noteParam);
         }
         if (reachedEnd) {
           break;

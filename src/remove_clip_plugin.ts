@@ -1,19 +1,13 @@
-import type {
-  InputNumberWidgetConfig,
-  LabelText,
-  ParamDescriptor,
-  Song,
-  TrackSelectorWidgetConfig,
-} from 'tuneflow';
+import type { LabelText, ParamDescriptor, Song, SongAccess } from 'tuneflow';
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
 
-export class TrackMove extends TuneflowPlugin {
+export class ClipRemover extends TuneflowPlugin {
   static providerId(): string {
     return 'andantei';
   }
 
   static pluginId(): string {
-    return 'track-move';
+    return 'clip-remover';
   }
 
   static providerDisplayName(): LabelText {
@@ -25,13 +19,19 @@ export class TrackMove extends TuneflowPlugin {
 
   static pluginDisplayName(): LabelText {
     return {
-      zh: '移动轨道',
-      en: 'Move Track',
+      zh: '删除片段',
+      en: 'Delete Clip',
     };
   }
 
   static allowReset(): boolean {
     return false;
+  }
+
+  songAccess(): SongAccess {
+    return {
+      removeTrack: true,
+    };
   }
 
   params(): { [paramName: string]: ParamDescriptor } {
@@ -43,27 +43,21 @@ export class TrackMove extends TuneflowPlugin {
         },
         defaultValue: undefined,
         widget: {
-          type: WidgetType.TrackSelector,
-          config: {
-            alwaysShowTrackInfo: true,
-          } as TrackSelectorWidgetConfig,
+          type: WidgetType.None,
         },
         adjustable: false,
         hidden: true,
       },
-      offsetTick: {
+      clipId: {
         displayName: {
-          zh: '移动量',
-          en: 'Track End',
+          zh: '片段',
+          en: 'Clip',
         },
-        defaultValue: 0,
+        defaultValue: undefined,
         widget: {
-          type: WidgetType.InputNumber,
-          config: {
-            minValue: Number.MIN_SAFE_INTEGER,
-            maxValue: Number.MIN_SAFE_INTEGER,
-          } as InputNumberWidgetConfig,
+          type: WidgetType.None,
         },
+        adjustable: false,
         hidden: true,
       },
     };
@@ -71,13 +65,15 @@ export class TrackMove extends TuneflowPlugin {
 
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     const trackId = this.getParam<string>(params, 'trackId');
+    const clipId = this.getParam<string>(params, 'clipId');
     const track = song.getTrackById(trackId);
     if (!track) {
       throw new Error('Track not ready');
     }
-    const offsetTick = this.getParam<number>(params, 'offsetTick');
-    if (offsetTick !== undefined && offsetTick !== null && typeof offsetTick === 'number') {
-      track.moveTrack(offsetTick);
+    const clip = track.getClipById(clipId);
+    if (!clip) {
+      throw new Error('Clip not ready');
     }
+    clip.deleteFromParent();
   }
 }

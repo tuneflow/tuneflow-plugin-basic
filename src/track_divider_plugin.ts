@@ -3,7 +3,6 @@ import type {
   ParamDescriptor,
   Song,
   SongAccess,
-  Track,
   TrackPitchSelectorWidgetConfig,
 } from 'tuneflow';
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
@@ -74,45 +73,35 @@ export class TrackDivider extends TuneflowPlugin {
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     const trackPitch = this.getParam<any>(params, 'trackPitch');
     const trackId = trackPitch.track as string;
-    let track: Track | undefined;
-    let trackIndex = -1;
-    for (trackIndex = 0; trackIndex < song.getTracks().length; trackIndex += 1) {
-      if (song.getTracks()[trackIndex].getId() === trackId) {
-        track = song.getTracks()[trackIndex];
-        break;
-      }
-    }
     const pitch = trackPitch.pitch as number;
+    const track = song.getTrackById(trackId);
     if (!track) {
       throw new Error('Track is not ready');
     }
-    const bassTrack = song.createTrack({
-      index: trackIndex,
-    });
-    bassTrack.setInstrument({
-      program: track.getInstrument().getProgram(),
-      isDrum: track.getInstrument().getIsDrum(),
-    });
-    const trebleTrack = song.createTrack({
-      index: trackIndex,
-    });
-    trebleTrack.setInstrument({
-      program: track.getInstrument().getProgram(),
-      isDrum: track.getInstrument().getIsDrum(),
-    });
-    for (const note of track.getNotes()) {
-      const noteParam = {
-        pitch: note.getPitch(),
-        velocity: note.getVelocity(),
-        startTick: note.getStartTick(),
-        endTick: note.getEndTick(),
-      };
-      if (note.getPitch() >= pitch) {
-        trebleTrack.createNote(noteParam);
-      } else {
-        bassTrack.createNote(noteParam);
+    const bassTrack = song.cloneTrack(track);
+    if (!bassTrack) {
+      throw new Error('Cannot clone the selected track');
+    }
+    for (const clip of bassTrack.getClips()) {
+      const rawNotes = clip.getRawNotes();
+      for (let i = rawNotes.length - 1; i >= 0; i -= 1) {
+        if (rawNotes[i].getPitch() >= pitch) {
+          clip.deleteNoteAt(i);
+        }
       }
     }
-    song.removeTrack(trackId);
+    const trebleTrack = song.cloneTrack(track);
+    if (!trebleTrack) {
+      throw new Error('Cannot clone the selected track');
+    }
+    for (const clip of trebleTrack.getClips()) {
+      const rawNotes = clip.getRawNotes();
+      for (let i = rawNotes.length - 1; i >= 0; i -= 1) {
+        if (rawNotes[i].getPitch() < pitch) {
+          clip.deleteNoteAt(i);
+        }
+      }
+    }
+    track.deleteFromParent();
   }
 }

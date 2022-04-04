@@ -83,22 +83,13 @@ export class LayerMultiplier extends TuneflowPlugin {
     if (!track) {
       throw new Error('Track not ready');
     }
-    const trackIndex = song.getTrackIndex(trackId);
-    const newTrack = song.createTrack({
-      index: trackIndex + 1,
-    });
+    const newTrack = song.cloneTrack(track);
+    if (!newTrack) {
+      return;
+    }
     newTrack.setInstrument({
       program: instrument.program,
       isDrum: instrument.isDrum,
     });
-    for (const note of track.getNotes()) {
-      const noteParam = {
-        pitch: note.getPitch(),
-        velocity: note.getVelocity(),
-        startTick: note.getStartTick(),
-        endTick: note.getEndTick(),
-      };
-      newTrack.createNote(noteParam);
-    }
   }
 }

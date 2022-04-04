@@ -1,11 +1,12 @@
 export { TempoScaler } from './tempo_scaler_plugin';
 export { TrackDivider } from './track_divider_plugin';
 export { TrackAdjust } from './track_adjust_plugin';
-export { TrackMerger } from './track_merger_plugin';
 export { LayerMultiplier } from './layer_multiplier_plugin';
 export { AddDrumTrack } from './add_drum_track_plugin';
 export { TrackRemover } from './remove_track_plugin';
-export { TrackMove } from './track_move_plugin';
-export { TrackTrim } from './track_trim_plugin';
+export { ClipRemover } from './remove_clip_plugin';
+export { ClipMove } from './clip_move_plugin';
+export { ClipTrim } from './clip_trim_plugin';
 export { TrackClone } from './track_clone_plugin';
+export { ClipClone } from './clip_clone_plugin';
 export { TrackAudioPluginAdjust } from './track_audio_plugin_adjust_plugin';

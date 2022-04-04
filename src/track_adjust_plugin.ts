@@ -1,5 +1,4 @@
 import type {
-  InputWidgetConfig,
   InstrumentSelectorWidgetConfig,
   LabelText,
   ParamDescriptor,
@@ -7,7 +6,7 @@ import type {
   Song,
   TrackSelectorWidgetConfig,
 } from 'tuneflow';
-import { TuneflowPlugin, WidgetType, decodeAudioPluginTuneflowId } from 'tuneflow';
+import { TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class TrackAdjust extends TuneflowPlugin {
   static providerId(): string {

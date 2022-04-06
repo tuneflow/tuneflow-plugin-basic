@@ -63,6 +63,10 @@ export class TrackDivider extends TuneflowPlugin {
     };
   }
 
+  public allowManualApplyAdjust(): boolean {
+    return true;
+  }
+
   songAccess(): SongAccess {
     return {
       createTrack: true,

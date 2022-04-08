@@ -20,7 +20,7 @@ export class ClipRemover extends TuneflowPlugin {
   static pluginDisplayName(): LabelText {
     return {
       zh: '删除片段',
-      en: 'Delete Clip',
+      en: 'Delete Clips',
     };
   }
 
@@ -36,24 +36,12 @@ export class ClipRemover extends TuneflowPlugin {
 
   params(): { [paramName: string]: ParamDescriptor } {
     return {
-      trackId: {
+      clipInfos: {
         displayName: {
-          zh: '轨道',
-          en: 'Track',
+          zh: '原片段',
+          en: 'Clips to clone',
         },
-        defaultValue: undefined,
-        widget: {
-          type: WidgetType.None,
-        },
-        adjustable: false,
-        hidden: true,
-      },
-      clipId: {
-        displayName: {
-          zh: '片段',
-          en: 'Clip',
-        },
-        defaultValue: undefined,
+        defaultValue: [],
         widget: {
           type: WidgetType.None,
         },
@@ -64,16 +52,18 @@ export class ClipRemover extends TuneflowPlugin {
   }
 
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
-    const trackId = this.getParam<string>(params, 'trackId');
-    const clipId = this.getParam<string>(params, 'clipId');
-    const track = song.getTrackById(trackId);
-    if (!track) {
-      throw new Error('Track not ready');
+    const clipInfos = this.getParam<any[]>(params, 'clipInfos');
+    for (const clipInfo of clipInfos) {
+      const { trackId, clipId } = clipInfo;
+      const track = song.getTrackById(trackId);
+      if (!track) {
+        continue;
+      }
+      const clip = track.getClipById(clipId);
+      if (!clip) {
+        continue;
+      }
+      clip.deleteFromParent();
     }
-    const clip = track.getClipById(clipId);
-    if (!clip) {
-      throw new Error('Clip not ready');
-    }
-    clip.deleteFromParent();
   }
 }

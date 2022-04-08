@@ -1,4 +1,4 @@
-import type { LabelText, ParamDescriptor, Song } from 'tuneflow';
+import type { Clip, LabelText, ParamDescriptor, Song } from 'tuneflow';
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class ClipMove extends TuneflowPlugin {
@@ -30,24 +30,12 @@ export class ClipMove extends TuneflowPlugin {
 
   params(): { [paramName: string]: ParamDescriptor } {
     return {
-      trackId: {
+      clipInfos: {
         displayName: {
-          zh: '轨道',
-          en: 'Track',
+          zh: '原片段',
+          en: 'Clips to clone',
         },
-        defaultValue: undefined,
-        widget: {
-          type: WidgetType.None,
-        },
-        adjustable: false,
-        hidden: true,
-      },
-      clipId: {
-        displayName: {
-          zh: '片段',
-          en: 'Clip',
-        },
-        defaultValue: undefined,
+        defaultValue: [],
         widget: {
           type: WidgetType.None,
         },
@@ -69,18 +57,45 @@ export class ClipMove extends TuneflowPlugin {
   }
 
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
-    const trackId = this.getParam<string>(params, 'trackId');
-    const clipId = this.getParam<string>(params, 'clipId');
-    const track = song.getTrackById(trackId);
-    if (!track) {
-      throw new Error('Track not ready');
+    const clipInfos = this.getParam<any[]>(params, 'clipInfos');
+    let offsetTick = this.getParam<number>(params, 'offsetTick');
+
+    if (offsetTick === undefined || offsetTick === null || typeof offsetTick !== 'number') {
+      return;
     }
-    const clip = track.getClipById(clipId);
-    if (!clip) {
-      throw new Error('Clip not ready');
+    offsetTick = Math.round(offsetTick);
+    if (Math.abs(offsetTick) < 1) {
+      return;
     }
-    const offsetTick = this.getParam<number>(params, 'offsetTick');
-    if (offsetTick !== undefined && offsetTick !== null && typeof offsetTick === 'number') {
+
+    // Get clips.
+    const clipsToAdjust = [];
+    for (const clipInfo of clipInfos) {
+      const { trackId, clipId } = clipInfo;
+      const track = song.getTrackById(trackId);
+      if (!track) {
+        continue;
+      }
+      const clip = track.getClipById(clipId);
+      if (!clip) {
+        continue;
+      }
+      clipsToAdjust.push(clip);
+    }
+    // Sort the order by when these clips are moved.
+    // If moving to the right, we should start from the rightmost clips, in order to prevent the other
+    // clips from being removed by earlier moves.
+    // Otherwise we start from the leftmost clips.
+    // (the clips in the same track are non-overlappable so it should be fine to sort by either start tick or end tick).
+    if (offsetTick > 0) {
+      // Sort the clips so that clips to the right will be moved first.
+      clipsToAdjust.sort((a: Clip, b: Clip) => b.getClipStartTick() - a.getClipStartTick());
+    } else if (offsetTick < 0) {
+      // Sort the clips so that clips to the left will be moved first.
+      clipsToAdjust.sort((a: Clip, b: Clip) => a.getClipStartTick() - b.getClipStartTick());
+    }
+    // Adjust clips.
+    for (const clip of clipsToAdjust) {
       clip.moveClip(offsetTick);
     }
   }

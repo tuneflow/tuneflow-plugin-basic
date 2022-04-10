@@ -11,4 +11,5 @@ export { TrackClone } from './track_clone_plugin';
 export { ClipClone } from './clip_clone_plugin';
 export { SplitClip } from './split_clip_plugin';
 export { ClipTranspose } from './clip_transpose_plugin';
+export { CreateEmptyTrack } from './create_empty_track_plugin';
 export { TrackAudioPluginAdjust } from './track_audio_plugin_adjust_plugin';

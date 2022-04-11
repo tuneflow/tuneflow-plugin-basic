@@ -52,6 +52,7 @@ export class TrackRemover extends TuneflowPlugin {
           type: WidgetType.TrackSelector,
           config: {} as TrackSelectorWidgetConfig,
         },
+        hidden: true,
       },
     };
   }

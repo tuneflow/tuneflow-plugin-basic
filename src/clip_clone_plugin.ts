@@ -1,6 +1,5 @@
 import type { LabelText, ParamDescriptor, Song, SongAccess } from 'tuneflow';
 import { InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
-import _ from 'underscore';
 
 export class ClipClone extends TuneflowPlugin {
   static providerId(): string {
@@ -107,19 +106,27 @@ export class ClipClone extends TuneflowPlugin {
       // its original track at the playhead position.
       // Clone all clips first and paste them later so that
       // clips won't be modified during copy process.
+      const clipMapping: any = {};
+      let minStartTick = Number.MAX_VALUE;
       for (const clipInfo of clipInfos) {
         const newClip = this.cloneClip(song, clipInfo.trackId, clipInfo.clipId, pasteToTrackId);
-        clipInfo.newClip = newClip;
+        clipMapping[`${clipInfo.trackId}__${clipInfo.clipId}`] = newClip;
+        minStartTick = Math.min(minStartTick, newClip.getClipStartTick());
       }
-      const minStartTick = _.min(clipInfos.map(item => item.newClip.getClipStartTick()));
       const offsetTick = playheadTick - minStartTick;
       for (const clipInfo of clipInfos) {
-        clipInfo.newClip.moveClip(offsetTick);
+        const newClip = clipMapping[`${clipInfo.trackId}__${clipInfo.clipId}`];
+        if (!newClip) {
+          throw new Error(
+            `Did not find clip info in mapping for ${clipInfo.trackId}__${clipInfo.clipId}`,
+          );
+        }
+        newClip.moveClip(offsetTick);
         const track = song.getTrackById(clipInfo.trackId);
         if (!track) {
           throw new Error('Track not found.');
         }
-        track.insertClip(clipInfo.newClip);
+        track.insertClip(newClip);
       }
     }
   }

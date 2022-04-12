@@ -1,5 +1,5 @@
 import type { LabelText, ParamDescriptor, SelectWidgetConfig, Song } from 'tuneflow';
-import { TuneflowPlugin, WidgetType, Note } from 'tuneflow';
+import { InjectSource, TuneflowPlugin, WidgetType, Note } from 'tuneflow';
 
 export class ClipTranspose extends TuneflowPlugin {
   static providerId(): string {
@@ -46,8 +46,8 @@ export class ClipTranspose extends TuneflowPlugin {
         widget: {
           type: WidgetType.None,
         },
-        adjustable: false,
         hidden: true,
+        injectFrom: InjectSource.SelectedClipInfos,
       },
       pitchOffset: {
         displayName: {
@@ -61,14 +61,14 @@ export class ClipTranspose extends TuneflowPlugin {
             options: [
               {
                 label: {
-                  zh: '+12 (升一个八度)',
+                  zh: '+12 (升八度)',
                   en: '+12 (One Octave Up)',
                 },
                 value: 12,
               },
               {
                 label: {
-                  zh: '-12 (降一个八度)',
+                  zh: '-12 (降八度)',
                   en: '-12 (One Octave Down)',
                 },
                 value: -12,

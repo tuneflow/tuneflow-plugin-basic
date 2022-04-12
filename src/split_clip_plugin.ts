@@ -1,5 +1,5 @@
 import type { LabelText, ParamDescriptor, Song } from 'tuneflow';
-import { Clip, TuneflowPlugin, WidgetType } from 'tuneflow';
+import { InjectSource, Clip, TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class SplitClip extends TuneflowPlugin {
   static providerId(): string {
@@ -46,8 +46,8 @@ export class SplitClip extends TuneflowPlugin {
         widget: {
           type: WidgetType.None,
         },
-        adjustable: false,
         hidden: true,
+        injectFrom: InjectSource.SelectedClipInfos,
       },
       playheadTick: {
         displayName: {
@@ -58,8 +58,8 @@ export class SplitClip extends TuneflowPlugin {
         widget: {
           type: WidgetType.InputNumber,
         },
-        adjustable: false,
         hidden: true,
+        injectFrom: InjectSource.TickAtPlayhead,
       },
     };
   }

@@ -1,5 +1,5 @@
 import type { LabelText, ParamDescriptor, Song, SongAccess } from 'tuneflow';
-import { TuneflowPlugin, WidgetType } from 'tuneflow';
+import { InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
 import _ from 'underscore';
 
 export class ClipClone extends TuneflowPlugin {
@@ -40,7 +40,6 @@ export class ClipClone extends TuneflowPlugin {
         widget: {
           type: WidgetType.None,
         },
-        adjustable: false,
         hidden: true,
       },
       pasteToTrackId: {
@@ -52,7 +51,6 @@ export class ClipClone extends TuneflowPlugin {
         widget: {
           type: WidgetType.None,
         },
-        adjustable: false,
         hidden: true,
       },
       playheadTick: {
@@ -62,10 +60,10 @@ export class ClipClone extends TuneflowPlugin {
         },
         defaultValue: undefined,
         widget: {
-          type: WidgetType.InputNumber,
+          type: WidgetType.None,
         },
-        adjustable: false,
         hidden: true,
+        injectFrom: InjectSource.TickAtPlayhead,
       },
     };
   }

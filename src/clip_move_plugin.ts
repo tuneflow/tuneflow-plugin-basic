@@ -1,5 +1,5 @@
 import type { Clip, LabelText, ParamDescriptor, Song } from 'tuneflow';
-import { TuneflowPlugin, WidgetType } from 'tuneflow';
+import { InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class ClipMove extends TuneflowPlugin {
   static providerId(): string {
@@ -41,6 +41,7 @@ export class ClipMove extends TuneflowPlugin {
         },
         adjustable: false,
         hidden: true,
+        injectFrom: InjectSource.SelectedClipInfos,
       },
       offsetTick: {
         displayName: {

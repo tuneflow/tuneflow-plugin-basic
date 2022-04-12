@@ -45,7 +45,6 @@ export class ClipRemover extends TuneflowPlugin {
         widget: {
           type: WidgetType.None,
         },
-        adjustable: false,
         hidden: true,
       },
     };

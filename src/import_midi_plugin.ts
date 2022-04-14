@@ -1,5 +1,12 @@
-import { SongAccess, TempoEvent, TimeSignatureEvent, TuneflowPlugin, WidgetType } from 'tuneflow';
-import type { FileSelectorWidgetConfig, LabelText, ParamDescriptor, Song } from 'tuneflow';
+import { InjectSource, TempoEvent, TimeSignatureEvent, TuneflowPlugin, WidgetType } from 'tuneflow';
+import type {
+  FileSelectorWidgetConfig,
+  LabelText,
+  ParamDescriptor,
+  Song,
+  SelectWidgetConfig,
+  SongAccess,
+} from 'tuneflow';
 import { Midi } from '@tonejs/midi';
 
 export class ImportMIDI extends TuneflowPlugin {
@@ -51,9 +58,49 @@ export class ImportMIDI extends TuneflowPlugin {
           } as FileSelectorWidgetConfig,
         },
       },
+      insertPosition: {
+        displayName: {
+          zh: '插入位置',
+          en: 'Insert Position',
+        },
+        defaultValue: 'playhead',
+        widget: {
+          type: WidgetType.Select,
+          config: {
+            options: [
+              {
+                label: {
+                  zh: '歌曲开始',
+                  en: 'Start of the song',
+                },
+                value: 'start',
+              },
+              {
+                label: {
+                  zh: '播放头',
+                  en: 'Playhead',
+                },
+                value: 'playhead',
+              },
+            ],
+          } as SelectWidgetConfig,
+        },
+      },
+      playheadTick: {
+        displayName: {
+          zh: '播放头位置',
+          en: 'Playhead Position',
+        },
+        defaultValue: undefined,
+        widget: {
+          type: WidgetType.None,
+        },
+        hidden: true,
+        injectFrom: InjectSource.TickAtPlayhead,
+      },
       overwriteTemposAndTimeSignatures: {
         displayName: {
-          zh: '覆盖现有Tempo和Time Signature',
+          zh: '覆盖现有 Tempo 和 Time Signature',
           en: 'Overwrite existing tempos and time signatures.',
         },
         defaultValue: false,
@@ -76,19 +123,33 @@ export class ImportMIDI extends TuneflowPlugin {
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     const file = this.getParam<File>(params, 'file');
     const fileBuffer = await file.arrayBuffer();
+    const playheadTick = this.getParam<number>(params, 'playheadTick');
+    const insertPosition = this.getParam<string>(params, 'insertPosition');
     const overwriteTemposAndTimeSignatures = this.getParam<boolean>(
       params,
       'overwriteTemposAndTimeSignatures',
     );
     const midi = new Midi(fileBuffer);
 
+    const insertOffset = insertPosition === 'playhead' ? playheadTick : 0;
+
     // Optionally overwrite tempos and time signatures.
     if (overwriteTemposAndTimeSignatures) {
       const newTempoEvents = [];
+      if (insertOffset > 0) {
+        // Insert a default tempo event at the beginning.
+        newTempoEvents.push(
+          new TempoEvent({
+            ticks: 0,
+            time: 0,
+            bpm: 120,
+          }),
+        );
+      }
       for (const rawTempoEvent of midi.header.tempos) {
         newTempoEvents.push(
           new TempoEvent({
-            ticks: rawTempoEvent.ticks,
+            ticks: insertOffset + rawTempoEvent.ticks,
             time: rawTempoEvent.time as number,
             bpm: rawTempoEvent.bpm,
           }),
@@ -99,7 +160,7 @@ export class ImportMIDI extends TuneflowPlugin {
       for (const rawTimeSignatureEvent of midi.header.timeSignatures) {
         newTimeSignatureEvents.push(
           new TimeSignatureEvent({
-            ticks: rawTimeSignatureEvent.ticks,
+            ticks: insertOffset + rawTimeSignatureEvent.ticks,
             // TODO: Verify if this order is correct.
             numerator: rawTimeSignatureEvent.timeSignature[0],
             denominator: rawTimeSignatureEvent.timeSignature[1],
@@ -116,13 +177,13 @@ export class ImportMIDI extends TuneflowPlugin {
         program: track.instrument.number,
         isDrum: track.instrument.percussion,
       });
-      const trackClip = songTrack.createClip({ clipStartTick: 0 });
+      const trackClip = songTrack.createClip({ clipStartTick: insertOffset });
       for (const note of track.notes) {
         trackClip.createNote({
           pitch: note.midi,
           velocity: Math.round(note.velocity * 127),
-          startTick: note.ticks,
-          endTick: note.ticks + note.durationTicks,
+          startTick: insertOffset + note.ticks,
+          endTick: insertOffset + note.ticks + note.durationTicks,
         });
       }
     }

@@ -5,7 +5,7 @@ import type {
   Song,
   TrackSelectorWidgetConfig,
 } from 'tuneflow';
-import { TuneflowPlugin, WidgetType, decodeAudioPluginTuneflowId } from 'tuneflow';
+import { TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class TrackAudioPluginAdjust extends TuneflowPlugin {
   static providerId(): string {
@@ -79,9 +79,12 @@ export class TrackAudioPluginAdjust extends TuneflowPlugin {
       throw new Error('Track not ready');
     }
     if (samplerPlugin && samplerPlugin.tfId) {
-      const audioPlugin = decodeAudioPluginTuneflowId(samplerPlugin.tfId);
-      audioPlugin.setIsEnabled(samplerPlugin.isEnabled);
-      track.setSamplerPlugin(audioPlugin);
+      let samplerPluginInstance = track.getSamplerPlugin();
+      if (!samplerPluginInstance || !samplerPluginInstance.matchesTfId(samplerPlugin.tfId)) {
+        samplerPluginInstance = track.createAudioPlugin(samplerPlugin.tfId);
+        track.setSamplerPlugin(samplerPluginInstance);
+      }
+      samplerPluginInstance.setIsEnabled(samplerPlugin.isEnabled);
     }
   }
 }

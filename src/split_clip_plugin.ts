@@ -92,13 +92,21 @@ export class SplitClip extends TuneflowPlugin {
             newClipStartTick,
             newClipEndTick,
           ),
-        )
-        .map(item => item.clone());
-      track.createClip({
+        );
+      const leftClip = track.createClip({
         clipStartTick: newClipStartTick,
         clipEndTick: newClipEndTick,
-        sortedNotes: leftNotes,
       });
+      for (const leftNote of leftNotes) {
+        leftClip.createNote({
+          pitch: leftNote.getPitch(),
+          velocity: leftNote.getVelocity(),
+          startTick: leftNote.getStartTick(),
+          endTick: leftNote.getEndTick(),
+          updateClipRange: false,
+          resolveClipConflict: false,
+        });
+      }
     }
   }
 }

@@ -170,7 +170,6 @@ export class AddDrumTrack extends TuneflowPlugin {
     const newClip = newTrack.createClip({
       clipStartTick: firstNoteTick,
       clipEndTick: lastTick,
-      sortedNotes: [],
     });
     let lastEndTick = firstNoteTick;
     let reachedEnd = false;

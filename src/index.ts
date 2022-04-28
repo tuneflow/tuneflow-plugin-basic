@@ -8,6 +8,7 @@ export { ClipRemover } from './remove_clip_plugin';
 export { ClipMove } from './clip_move_plugin';
 export { ClipTrim } from './clip_trim_plugin';
 export { NoteMove } from './note_move_plugin';
+export { NoteTrim } from './note_trim_plugin';
 export { TrackClone } from './track_clone_plugin';
 export { ClipClone } from './clip_clone_plugin';
 export { SplitClip } from './split_clip_plugin';

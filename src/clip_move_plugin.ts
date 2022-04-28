@@ -20,7 +20,7 @@ export class ClipMove extends TuneflowPlugin {
   static pluginDisplayName(): LabelText {
     return {
       zh: '移动片段',
-      en: 'Move Clip',
+      en: 'Move Clips',
     };
   }
 

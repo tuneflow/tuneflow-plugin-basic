@@ -1,5 +1,6 @@
-import type { LabelText, ParamDescriptor, Song } from 'tuneflow';
-import { TuneflowPlugin, WidgetType } from 'tuneflow';
+import type { Clip, LabelText, ParamDescriptor, SelectWidgetConfig, Song } from 'tuneflow';
+import { TuneflowPlugin, WidgetType, InjectSource } from 'tuneflow';
+import _ from 'underscore';
 
 export class ClipTrim extends TuneflowPlugin {
   static providerId(): string {
@@ -30,79 +31,110 @@ export class ClipTrim extends TuneflowPlugin {
 
   params(): { [paramName: string]: ParamDescriptor } {
     return {
-      trackId: {
+      clipInfos: {
         displayName: {
-          zh: '轨道',
-          en: 'Track',
+          zh: '剪裁片段',
+          en: 'Clips to trim',
         },
-        defaultValue: undefined,
+        defaultValue: [],
         widget: {
           type: WidgetType.None,
         },
         adjustable: false,
         hidden: true,
+        injectFrom: InjectSource.SelectedClipInfos,
       },
-      clipId: {
+      trimPosition: {
         displayName: {
-          zh: '片段',
-          en: 'Clip',
+          zh: '裁剪位置',
+          en: 'Trim Position',
         },
         defaultValue: undefined,
         widget: {
-          type: WidgetType.None,
+          type: WidgetType.Select,
+          config: {
+            options: [
+              {
+                value: 'left',
+                label: {
+                  zh: '左侧',
+                  en: 'Left',
+                },
+              },
+              {
+                value: 'right',
+                label: {
+                  zh: '右侧',
+                  en: 'Right',
+                },
+              },
+            ],
+          } as SelectWidgetConfig,
         },
-        adjustable: false,
         hidden: true,
       },
-      clipStartTick: {
+      offsetTicks: {
         displayName: {
-          zh: '片段起始',
-          en: 'Clip Start',
+          zh: '移动量',
+          en: 'Ticks Offset',
         },
-        defaultValue: undefined,
+        defaultValue: 0,
         widget: {
           type: WidgetType.None,
         },
         hidden: true,
-        optional: true,
-      },
-      clipEndTick: {
-        displayName: {
-          zh: '片段结束',
-          en: 'Clip End',
-        },
-        defaultValue: undefined,
-        widget: {
-          type: WidgetType.None,
-        },
-        hidden: true,
-        optional: true,
       },
     };
   }
 
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
-    const trackId = this.getParam<string>(params, 'trackId');
-    const clipId = this.getParam<string>(params, 'clipId');
-    const track = song.getTrackById(trackId);
-    if (!track) {
-      throw new Error('Track not ready');
+    const clipInfos = this.getParam<any[]>(params, 'clipInfos');
+    const trimPosition = this.getParam<string>(params, 'trimPosition');
+    let offsetTicks = this.getParam<number>(params, 'offsetTicks');
+
+    if (!_.isNumber(offsetTicks)) {
+      return;
     }
-    const clip = track.getClipById(clipId);
-    if (!clip) {
-      throw new Error('Clip not ready');
+    offsetTicks = Math.round(offsetTicks);
+    if (Math.abs(offsetTicks) < 1) {
+      return;
     }
-    const clipStartTick = this.getParam<number>(params, 'clipStartTick');
-    if (
-      clipStartTick !== undefined &&
-      clipStartTick !== null &&
-      typeof clipStartTick === 'number'
-    ) {
-      clip.adjustClipLeft(clipStartTick);
+
+    // Get clips.
+    const clipsToAdjust = [];
+    for (const clipInfo of clipInfos) {
+      const { trackId, clipId } = clipInfo;
+      const track = song.getTrackById(trackId);
+      if (!track) {
+        continue;
+      }
+      const clip = track.getClipById(clipId);
+      if (!clip) {
+        continue;
+      }
+      clipsToAdjust.push(clip);
     }
-    const clipEndTick = this.getParam<number>(params, 'clipEndTick');
-    if (clipEndTick !== undefined && clipEndTick !== null && typeof clipEndTick === 'number') {
-      clip.adjustClipRight(clipEndTick);
+    if (clipsToAdjust.length === 0) {
+      return;
+    }
+
+    // TODO: Sort by track id first before sorting by start/end ticks.
+    // Check for conditions where the adjusted clips might overlap with each other.
+    if (trimPosition === 'left' && offsetTicks < 0) {
+      // Moving left edges to the left.
+      // Sort the clips so that clips that start first will be trimmed first.
+      clipsToAdjust.sort((a: Clip, b: Clip) => a.getClipStartTick() - b.getClipStartTick());
+    } else if (trimPosition === 'right' && offsetTicks > 0) {
+      // Moving right edges to the right.
+      // Sort the clips so that clips that end last will be trimmed first.
+      clipsToAdjust.sort((a: Clip, b: Clip) => b.getClipEndTick() - a.getClipEndTick());
+    }
+    for (const clip of clipsToAdjust) {
+      if (trimPosition === 'left') {
+        clip.adjustClipLeft(clip.getClipStartTick() + offsetTicks);
+      } else if (trimPosition === 'right') {
+        clip.adjustClipRight(clip.getClipEndTick() + offsetTicks);
+      }
     }
   }
 }

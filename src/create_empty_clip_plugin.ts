@@ -37,10 +37,10 @@ export class CreateEmptyClip extends TuneflowPlugin {
   // TODO: Support different types of clips.
   params(): { [paramName: string]: ParamDescriptor } {
     return {
-      playheadTick: {
+      insertAtTick: {
         displayName: {
-          zh: '当前指针位置',
-          en: 'Playhead Position',
+          zh: '添加位置',
+          en: 'Insert Position',
         },
         defaultValue: undefined,
         widget: {
@@ -51,8 +51,8 @@ export class CreateEmptyClip extends TuneflowPlugin {
       },
       trackId: {
         displayName: {
-          zh: '原轨道',
-          en: 'Track to layer',
+          zh: '添加到轨道',
+          en: 'Insert to Track',
         },
         defaultValue: undefined,
         widget: {
@@ -61,6 +61,7 @@ export class CreateEmptyClip extends TuneflowPlugin {
             alwaysShowTrackInfo: true,
           } as TrackSelectorWidgetConfig,
         },
+        adjustable: false,
       },
     };
   }
@@ -73,14 +74,14 @@ export class CreateEmptyClip extends TuneflowPlugin {
 
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     const trackId = this.getParam<string>(params, 'trackId');
-    const playheadTick = this.getParam<number>(params, 'playheadTick');
+    const insertAtTick = this.getParam<number>(params, 'insertAtTick');
     const track = song.getTrackById(trackId);
     if (!track) {
       throw new Error(`Track ${trackId} not found.`);
     }
     track.createClip({
-      clipStartTick: playheadTick,
-      clipEndTick: playheadTick + song.getTicksPerBar(),
+      clipStartTick: insertAtTick,
+      clipEndTick: insertAtTick + 4 * song.getTicksPerBar(),
     });
   }
 }

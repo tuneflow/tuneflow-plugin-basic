@@ -73,6 +73,20 @@ export class ClipTranspose extends TuneflowPlugin {
                 },
                 value: -12,
               },
+              {
+                label: {
+                  zh: '+1 (升半音)',
+                  en: '+1 (One Semiton Up)',
+                },
+                value: 1,
+              },
+              {
+                label: {
+                  zh: '-1 (降半音)',
+                  en: '-1 (One Semitone Down)',
+                },
+                value: -1,
+              },
             ],
           } as SelectWidgetConfig,
         },

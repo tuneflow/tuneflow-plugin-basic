@@ -11,6 +11,7 @@ export { NoteMove } from './note_move_plugin';
 export { NoteTrim } from './note_trim_plugin';
 export { NoteRemove } from './note_remove_plugin';
 export { NoteCreate } from './create_note_plugin';
+export { NoteVelocityAdjust } from './adjust_notes_velocity_plugin';
 export { TrackClone } from './track_clone_plugin';
 export { ClipClone } from './clip_clone_plugin';
 export { SplitClip } from './split_clip_plugin';

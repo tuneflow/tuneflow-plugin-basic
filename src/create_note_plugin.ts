@@ -115,6 +115,7 @@ export class NoteCreate extends TuneflowPlugin {
       startTick: noteStartTick,
       endTick: noteEndTick,
       velocity: noteVelocity,
+      updateClipRange: false,
     });
   }
 }

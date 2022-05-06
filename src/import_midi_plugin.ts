@@ -178,6 +178,7 @@ export class ImportMIDI extends TuneflowPlugin {
         isDrum: track.instrument.percussion,
       });
       const trackClip = songTrack.createClip({ clipStartTick: insertOffset });
+      let minStartTick = Number.MAX_SAFE_INTEGER;
       for (const note of track.notes) {
         trackClip.createNote({
           pitch: note.midi,
@@ -185,6 +186,10 @@ export class ImportMIDI extends TuneflowPlugin {
           startTick: insertOffset + note.ticks,
           endTick: insertOffset + note.ticks + note.durationTicks,
         });
+        minStartTick = Math.min(minStartTick, insertOffset + note.ticks);
+      }
+      if (minStartTick !== Number.MAX_SAFE_INTEGER) {
+        trackClip.adjustClipLeft(minStartTick);
       }
     }
   }

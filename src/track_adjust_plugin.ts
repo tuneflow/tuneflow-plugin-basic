@@ -73,6 +73,22 @@ export class TrackAdjust extends TuneflowPlugin {
         },
         hidden: true,
       },
+      pan: {
+        displayName: {
+          zh: '声像 (Pan)',
+          en: 'Pan',
+        },
+        defaultValue: 0,
+        widget: {
+          type: WidgetType.Slider,
+          config: {
+            minValue: -64,
+            maxValue: 63,
+            step: 1,
+          } as SliderWidgetConfig,
+        },
+        hidden: true,
+      },
       instrument: {
         displayName: {
           zh: '乐器',
@@ -94,12 +110,14 @@ export class TrackAdjust extends TuneflowPlugin {
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     const trackId = this.getParam<string>(params, 'trackId');
     const volume = this.getParam<number>(params, 'volume');
+    const pan = this.getParam<number>(params, 'pan');
     const instrument = this.getParam<any>(params, 'instrument');
     const track = song.getTrackById(trackId);
     if (!track) {
       throw new Error('Track not ready');
     }
     track.setVolume(volume / 100);
+    track.setPan(pan);
     track.setInstrument({
       program: instrument.program,
       isDrum: instrument.isDrum,

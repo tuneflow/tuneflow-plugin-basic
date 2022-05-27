@@ -1,5 +1,5 @@
-import { Clip, ClipInfo, LabelText, ParamDescriptor, Song } from 'tuneflow';
-import { InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
+import { Clip, InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
+import type { ClipInfo, LabelText, ParamDescriptor, Song } from 'tuneflow';
 import _ from 'underscore';
 
 export class NoteClone extends TuneflowPlugin {

@@ -1,4 +1,4 @@
-import type { ClipInfo, LabelText, ParamDescriptor, Song } from 'tuneflow';
+import { Clip, ClipInfo, LabelText, ParamDescriptor, Song } from 'tuneflow';
 import { InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
 import _ from 'underscore';
 
@@ -98,11 +98,18 @@ export class NoteClone extends TuneflowPlugin {
     const minTick = _.min(notes.map(note => note.getStartTick()));
     for (const note of notes) {
       const offsetFromFirstNote = note.getStartTick() - minTick;
+      const newStartTick = pasteTick + offsetFromFirstNote;
+      const newEndTick = pasteTick + offsetFromFirstNote + note.getEndTick() - note.getStartTick();
+      if (
+        !Clip.isNoteInClip(newStartTick, newEndTick, clip.getClipStartTick(), clip.getClipEndTick())
+      ) {
+        continue;
+      }
       clip.createNote({
         pitch: note.getPitch(),
         velocity: note.getVelocity(),
-        startTick: pasteTick + offsetFromFirstNote,
-        endTick: pasteTick + offsetFromFirstNote + note.getEndTick() - note.getStartTick(),
+        startTick: newStartTick,
+        endTick: newEndTick,
         updateClipRange: false,
       });
     }

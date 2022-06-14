@@ -1,0 +1,120 @@
+import { TuneflowPlugin, WidgetType } from 'tuneflow';
+import type { LabelText, TrackSelectorWidgetConfig, ParamDescriptor, Song } from 'tuneflow';
+
+export class UpdateTrackAutomationTarget extends TuneflowPlugin {
+  static providerId(): string {
+    return 'andantei';
+  }
+
+  static pluginId(): string {
+    return 'update-track-automation-target';
+  }
+
+  static providerDisplayName(): LabelText {
+    return {
+      zh: 'Andantei行板',
+      en: 'Andantei',
+    };
+  }
+
+  static pluginDisplayName(): LabelText {
+    return {
+      zh: '更新轨道自动化参数目标',
+      en: 'Update Track Automation Parameter Target',
+    };
+  }
+
+  static allowReset(): boolean {
+    return false;
+  }
+
+  params(): { [paramName: string]: ParamDescriptor } {
+    return {
+      trackId: {
+        displayName: {
+          zh: '轨道',
+          en: 'Track',
+        },
+        defaultValue: undefined,
+        widget: {
+          type: WidgetType.TrackSelector,
+          config: {
+            alwaysShowTrackInfo: true,
+          } as TrackSelectorWidgetConfig,
+        },
+        adjustable: false,
+        hidden: true,
+      },
+      targetIndex: {
+        displayName: {
+          zh: '参数位置',
+          en: 'Parameter Index',
+        },
+        defaultValue: undefined,
+        widget: {
+          type: WidgetType.None,
+          config: {},
+        },
+        adjustable: false,
+        hidden: true,
+      },
+      newTargetType: {
+        displayName: {
+          zh: '新目标类型',
+          en: 'New Target Type',
+        },
+        defaultValue: undefined,
+        widget: {
+          type: WidgetType.None,
+        },
+        adjustable: false,
+        hidden: true,
+      },
+      newPluginInstanceId: {
+        displayName: {
+          zh: '新插件实例Id',
+          en: 'New Plugin Instance Id',
+        },
+        defaultValue: undefined,
+        widget: {
+          type: WidgetType.None,
+        },
+        adjustable: false,
+        hidden: true,
+        optional: true,
+      },
+      newParamId: {
+        displayName: {
+          zh: '新自动化参数Id',
+          en: 'New Automation Parameter Id',
+        },
+        defaultValue: undefined,
+        widget: {
+          type: WidgetType.None,
+        },
+        adjustable: false,
+        hidden: true,
+        optional: true,
+      },
+    };
+  }
+
+  async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
+    const trackId = this.getParam<string>(params, 'trackId');
+    const targetIndex = this.getParam<number>(params, 'targetIndex');
+    const newTargetType = this.getParam<number>(params, 'newTargetType');
+    const newPluginInstanceId = this.getParam<string | undefined>(params, 'newPluginInstanceId');
+    const newParamId = this.getParam<string | undefined>(params, 'newParamId');
+    const track = song.getTrackById(trackId);
+    if (!track) {
+      throw new Error(`Track ${trackId} not found.`);
+    }
+    const target = track.getAutomation().getAutomationTargets()[targetIndex];
+    if (!target) {
+      throw new Error(`Track param @${targetIndex} of track ${trackId} does not exist`);
+    }
+    target.setType(newTargetType);
+    target.setPluginInstanceId(newPluginInstanceId);
+    target.setParamId(newParamId);
+  }
+}

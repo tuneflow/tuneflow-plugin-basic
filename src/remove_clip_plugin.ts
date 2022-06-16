@@ -62,7 +62,7 @@ export class ClipRemover extends TuneflowPlugin {
       if (!clip) {
         continue;
       }
-      clip.deleteFromParent();
+      clip.deleteFromParent(/* deleteAssociatedTrackAutomation= */ true);
     }
   }
 }

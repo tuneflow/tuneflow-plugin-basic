@@ -1,4 +1,4 @@
-import type { LabelText, ParamDescriptor, Song, SongAccess } from 'tuneflow';
+import type { Clip, LabelText, ParamDescriptor, Song, SongAccess } from 'tuneflow';
 import { InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class ClipClone extends TuneflowPlugin {
@@ -99,7 +99,7 @@ export class ClipClone extends TuneflowPlugin {
         throw new Error('Paste to track not found.');
       }
       const newClip = this.cloneClip(song, clipInfo.trackId, clipInfo.clipId, pasteToTrackId);
-      newClip.moveClipTo(playheadTick);
+      newClip.moveClipTo(playheadTick, /* moveAssociatedTrackAutomationPoints= */ false);
       newTrack.insertClip(newClip);
     } else {
       // Clone multiple clips, each clip will be pasted into
@@ -115,13 +115,13 @@ export class ClipClone extends TuneflowPlugin {
       }
       const offsetTick = playheadTick - minStartTick;
       for (const clipInfo of clipInfos) {
-        const newClip = clipMapping[`${clipInfo.trackId}__${clipInfo.clipId}`];
+        const newClip = clipMapping[`${clipInfo.trackId}__${clipInfo.clipId}`] as Clip;
         if (!newClip) {
           throw new Error(
             `Did not find clip info in mapping for ${clipInfo.trackId}__${clipInfo.clipId}`,
           );
         }
-        newClip.moveClip(offsetTick);
+        newClip.moveClip(offsetTick, /* moveAssociatedTrackAutomationPoints= */ false);
         const track = song.getTrackById(clipInfo.trackId);
         if (!track) {
           throw new Error('Track not found.');

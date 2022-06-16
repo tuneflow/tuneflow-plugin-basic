@@ -156,9 +156,12 @@ export class ClipMove extends TuneflowPlugin {
     for (const clipMetadata of clipsToAdjust) {
       const clip = clipMetadata.clip as Clip;
       if (offsetTrackIndexes !== 0) {
-        clip.deleteFromParent();
+        clip.deleteFromParent(/* deleteAssociatedTrackAutomation= */ false);
       }
-      clip.moveClip(offsetTick);
+      clip.moveClip(
+        offsetTick,
+        /* moveAssociatedTrackAutomationPoints= */ offsetTrackIndexes === 0,
+      );
       const remappedTrack = clipMetadata.remappedTrack as Track;
       if (remappedTrack) {
         remappedTrack.insertClip(clip);

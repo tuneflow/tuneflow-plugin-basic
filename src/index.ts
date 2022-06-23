@@ -28,3 +28,4 @@ export { RemoveTrackAutomationPoint } from './remove_track_automation_point_plug
 export { RemoveTrackAutomationParam } from './remove_track_automation_param_plugin';
 export { UpdateTrackAutomationTarget } from './update_track_automation_target_plugin';
 export { MoveTrackAutomationPoints } from './move_track_automation_point_plugin';
+export { UpdateTrackAutomationParamEnabled } from './update_track_automation_param_enabled_plugin';

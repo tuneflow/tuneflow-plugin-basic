@@ -1,4 +1,4 @@
-import { TuneflowPlugin, WidgetType } from 'tuneflow';
+import { AutomationTarget, TuneflowPlugin, WidgetType } from 'tuneflow';
 import type { LabelText, TrackSelectorWidgetConfig, ParamDescriptor, Song } from 'tuneflow';
 
 export class UpdateTrackAutomationTarget extends TuneflowPlugin {
@@ -113,8 +113,12 @@ export class UpdateTrackAutomationTarget extends TuneflowPlugin {
     if (!target) {
       throw new Error(`Track param @${targetIndex} of track ${trackId} does not exist`);
     }
-    target.setType(newTargetType);
-    target.setPluginInstanceId(newPluginInstanceId);
-    target.setParamId(newParamId);
+    track.getAutomation().getAutomationTargets().splice(targetIndex, 1);
+    track
+      .getAutomation()
+      .addAutomation(
+        new AutomationTarget(newTargetType, newPluginInstanceId, newParamId),
+        targetIndex,
+      );
   }
 }

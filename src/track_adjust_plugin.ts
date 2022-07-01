@@ -4,9 +4,11 @@ import type {
   ParamDescriptor,
   SliderWidgetConfig,
   Song,
+  SwitchWidgetConfig,
   TrackSelectorWidgetConfig,
 } from 'tuneflow';
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
+import _ from 'underscore';
 
 export class TrackAdjust extends TuneflowPlugin {
   static providerId(): string {
@@ -62,7 +64,7 @@ export class TrackAdjust extends TuneflowPlugin {
           zh: '音量',
           en: 'Volume',
         },
-        defaultValue: 100,
+        defaultValue: undefined,
         widget: {
           type: WidgetType.Slider,
           config: {
@@ -72,13 +74,14 @@ export class TrackAdjust extends TuneflowPlugin {
           } as SliderWidgetConfig,
         },
         hidden: true,
+        optional: true,
       },
       pan: {
         displayName: {
           zh: '声像 (Pan)',
           en: 'Pan',
         },
-        defaultValue: 0,
+        defaultValue: undefined,
         widget: {
           type: WidgetType.Slider,
           config: {
@@ -88,39 +91,78 @@ export class TrackAdjust extends TuneflowPlugin {
           } as SliderWidgetConfig,
         },
         hidden: true,
+        optional: true,
+      },
+      muted: {
+        displayName: {
+          zh: '静音',
+          en: 'Mute',
+        },
+        defaultValue: undefined,
+        widget: {
+          type: WidgetType.Switch,
+          config: {} as SwitchWidgetConfig,
+        },
+        hidden: true,
+        optional: true,
+      },
+      solo: {
+        displayName: {
+          zh: '独奏',
+          en: 'Solo',
+        },
+        defaultValue: undefined,
+        widget: {
+          type: WidgetType.Switch,
+          config: {} as SwitchWidgetConfig,
+        },
+        hidden: true,
+        optional: true,
       },
       instrument: {
         displayName: {
           zh: '乐器',
           en: 'Instrument',
         },
-        defaultValue: {
-          program: 0,
-          isDrum: false,
-        },
+        defaultValue: undefined,
         widget: {
           type: WidgetType.InstrumentSelector,
           config: {} as InstrumentSelectorWidgetConfig,
         },
         hidden: true,
+        optional: true,
       },
     };
   }
 
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     const trackId = this.getParam<string>(params, 'trackId');
-    const volume = this.getParam<number>(params, 'volume');
-    const pan = this.getParam<number>(params, 'pan');
+    const volume = this.getParam<number | undefined>(params, 'volume');
+    const pan = this.getParam<number | undefined>(params, 'pan');
+    const mute = this.getParam<boolean | undefined>(params, 'mute');
+    const solo = this.getParam<boolean | undefined>(params, 'solo');
     const instrument = this.getParam<any>(params, 'instrument');
     const track = song.getTrackById(trackId);
     if (!track) {
       throw new Error('Track not ready');
     }
-    track.setVolume(volume / 100);
-    track.setPan(pan);
-    track.setInstrument({
-      program: instrument.program,
-      isDrum: instrument.isDrum,
-    });
+    if (_.isNumber(volume)) {
+      track.setVolume(volume / 100);
+    }
+    if (_.isNumber(pan)) {
+      track.setPan(pan);
+    }
+    if (_.isBoolean(mute)) {
+      track.setMuted(mute);
+    }
+    if (_.isBoolean(solo)) {
+      track.setSolo(solo);
+    }
+    if (instrument) {
+      track.setInstrument({
+        program: instrument.program,
+        isDrum: instrument.isDrum,
+      });
+    }
   }
 }

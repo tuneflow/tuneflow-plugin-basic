@@ -1,4 +1,11 @@
-import { InjectSource, TempoEvent, TimeSignatureEvent, TuneflowPlugin, WidgetType } from 'tuneflow';
+import {
+  InjectSource,
+  TempoEvent,
+  TimeSignatureEvent,
+  TrackType,
+  TuneflowPlugin,
+  WidgetType,
+} from 'tuneflow';
 import type {
   FileSelectorWidgetConfig,
   LabelText,
@@ -172,12 +179,12 @@ export class ImportMIDI extends TuneflowPlugin {
 
     // Add tracks and notes.
     for (const track of midi.tracks) {
-      const songTrack = song.createTrack({});
+      const songTrack = song.createTrack({ type: TrackType.MIDI_TRACK });
       songTrack.setInstrument({
         program: track.instrument.number,
         isDrum: track.instrument.percussion,
       });
-      const trackClip = songTrack.createClip({ clipStartTick: insertOffset });
+      const trackClip = songTrack.createMIDIClip({ clipStartTick: insertOffset });
       let minStartTick = Number.MAX_SAFE_INTEGER;
       for (const note of track.notes) {
         trackClip.createNote({

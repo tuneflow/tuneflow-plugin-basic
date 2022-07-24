@@ -1,10 +1,11 @@
-import { InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
+import { InjectSource, TrackType, TuneflowPlugin, WidgetType } from 'tuneflow';
 import type {
   LabelText,
   TrackSelectorWidgetConfig,
   ParamDescriptor,
   Song,
   SongAccess,
+  ReadAPIs,
 } from 'tuneflow';
 
 export class CreateEmptyClip extends TuneflowPlugin {
@@ -63,6 +64,19 @@ export class CreateEmptyClip extends TuneflowPlugin {
         },
         adjustable: false,
       },
+      audioFilePath: {
+        displayName: {
+          zh: '音频文件',
+          en: 'Audio File',
+        },
+        defaultValue: undefined,
+        widget: {
+          type: WidgetType.None,
+        },
+        adjustable: false,
+        hidden: true,
+        optional: true,
+      },
     };
   }
 
@@ -72,16 +86,35 @@ export class CreateEmptyClip extends TuneflowPlugin {
     };
   }
 
-  async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
+  async run(song: Song, params: { [paramName: string]: any }, readApis: ReadAPIs): Promise<void> {
     const trackId = this.getParam<string>(params, 'trackId');
     const insertAtTick = this.getParam<number>(params, 'insertAtTick');
+    const audioFilePath = this.getParam<string | undefined>(params, 'audioFilePath');
     const track = song.getTrackById(trackId);
     if (!track) {
       throw new Error(`Track ${trackId} not found.`);
     }
-    track.createClip({
-      clipStartTick: insertAtTick,
-      clipEndTick: insertAtTick + 4 * song.getTicksPerBar(),
-    });
+    if (track.getType() === TrackType.AUDIO_TRACK) {
+      if (!audioFilePath) {
+        throw new Error('Audio file path must be provided when creating an audio clip.');
+      }
+      const audioBuffer = await readApis.readAudioBuffer(audioFilePath);
+      if (!audioBuffer) {
+        throw new Error(`Error reading audio file`);
+      }
+      track.createAudioClip({
+        clipStartTick: insertAtTick,
+        audioClipData: {
+          audioFilePath,
+          startTick: insertAtTick,
+          duration: audioBuffer.duration,
+        },
+      });
+    } else if (track.getType() === TrackType.MIDI_TRACK) {
+      track.createMIDIClip({
+        clipStartTick: insertAtTick,
+        clipEndTick: insertAtTick + 4 * song.getTicksPerBar(),
+      });
+    }
   }
 }

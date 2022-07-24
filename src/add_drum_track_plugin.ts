@@ -7,7 +7,7 @@ import type {
   SongAccess,
   SwitchWidgetConfig,
 } from 'tuneflow';
-import { TuneflowPlugin, WidgetType } from 'tuneflow';
+import { TuneflowPlugin, WidgetType, TrackType } from 'tuneflow';
 import _ from 'underscore';
 // Dynamic import all presets since they are pretty large in size.
 const musicgatewayPresets = () => import('./add_drum_track_plugin_presets/musicgateway.com');
@@ -153,6 +153,7 @@ export class AddDrumTrack extends TuneflowPlugin {
     const drumPatternIndex = Number(presetKeyParts[1]);
     const drumPattern = (drumPatterns as any)[drumPatternsGroup].patterns[drumPatternIndex][1];
     const newTrack = song.createTrack({
+      type: TrackType.MIDI_TRACK,
       index: song.getTracks().length,
     });
     newTrack.setInstrument({
@@ -167,7 +168,7 @@ export class AddDrumTrack extends TuneflowPlugin {
     }
 
     const lastTick = song.getLastTick();
-    const newClip = newTrack.createClip({
+    const newClip = newTrack.createMIDIClip({
       clipStartTick: firstNoteTick,
       clipEndTick: lastTick,
     });

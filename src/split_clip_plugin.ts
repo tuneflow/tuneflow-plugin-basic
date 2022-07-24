@@ -1,5 +1,5 @@
-import type { LabelText, ParamDescriptor, Song } from 'tuneflow';
-import { InjectSource, Clip, TuneflowPlugin, WidgetType } from 'tuneflow';
+import { InjectSource, ClipType, Clip, TuneflowPlugin, WidgetType } from 'tuneflow';
+import type { AudioClipData, LabelText, ParamDescriptor, Song } from 'tuneflow';
 
 export class SplitClip extends TuneflowPlugin {
   static providerId(): string {
@@ -93,10 +93,21 @@ export class SplitClip extends TuneflowPlugin {
             newClipEndTick,
           ),
         );
-      const leftClip = track.createClip({
-        clipStartTick: newClipStartTick,
-        clipEndTick: newClipEndTick,
-      });
+      let leftClip: Clip;
+      if (clip.getType() === ClipType.AUDIO_CLIP) {
+        leftClip = track.createAudioClip({
+          clipStartTick: newClipStartTick,
+          clipEndTick: newClipEndTick,
+          audioClipData: clip.getAudioClipData() as AudioClipData,
+        });
+      } else if (clip.getType() === ClipType.MIDI_CLIP) {
+        leftClip = track.createMIDIClip({
+          clipStartTick: newClipStartTick,
+          clipEndTick: newClipEndTick,
+        });
+      } else {
+        throw new Error(`Unsupported clip type ${clip.getType()}`);
+      }
       for (const leftNote of leftNotes) {
         leftClip.createNote({
           pitch: leftNote.getPitch(),

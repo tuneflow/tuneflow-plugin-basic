@@ -50,6 +50,17 @@ export class CreateEmptyTrack extends TuneflowPlugin {
         optional: true,
         hidden: true,
       },
+      type: {
+        displayName: {
+          zh: '轨道类型',
+          en: 'Track Type',
+        },
+        defaultValue: undefined,
+        widget: {
+          type: WidgetType.None,
+        },
+        hidden: true,
+      },
     };
   }
 
@@ -60,7 +71,8 @@ export class CreateEmptyTrack extends TuneflowPlugin {
   }
 
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
+    const type = this.getParam<number>(params, 'type');
     const insertIndex = this.getParam<number>(params, 'insertIndex');
-    song.createTrack({ index: insertIndex });
+    song.createTrack({ type, index: insertIndex });
   }
 }

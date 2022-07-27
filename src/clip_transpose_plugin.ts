@@ -1,5 +1,5 @@
+import { ClipType, InjectSource, TuneflowPlugin, WidgetType, Note } from 'tuneflow';
 import type { LabelText, ParamDescriptor, SelectWidgetConfig, Song } from 'tuneflow';
-import { InjectSource, TuneflowPlugin, WidgetType, Note } from 'tuneflow';
 
 export class ClipTranspose extends TuneflowPlugin {
   static providerId(): string {
@@ -108,14 +108,18 @@ export class ClipTranspose extends TuneflowPlugin {
       if (!clip) {
         throw new Error('Clip not found.');
       }
-      for (let i = clip.getRawNotes().length - 1; i >= 0; i -= 1) {
-        const note = clip.getRawNotes()[i];
-        const newPitch = note.getPitch() + pitchOffset;
-        if (!Note.isValidPitch(newPitch)) {
-          clip.deleteNoteAt(i);
-          continue;
+      if (clip.getType() === ClipType.MIDI_CLIP) {
+        for (let i = clip.getRawNotes().length - 1; i >= 0; i -= 1) {
+          const note = clip.getRawNotes()[i];
+          const newPitch = note.getPitch() + pitchOffset;
+          if (!Note.isValidPitch(newPitch)) {
+            clip.deleteNoteAt(i);
+            continue;
+          }
+          note.setPitch(newPitch);
         }
-        note.setPitch(newPitch);
+      } else if (clip.getType() === ClipType.AUDIO_CLIP) {
+        // TODO: Support audio pitch shift.
       }
     }
   }

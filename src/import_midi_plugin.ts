@@ -1,4 +1,6 @@
 import {
+  AutomationTarget,
+  AutomationTargetType,
   InjectSource,
   TempoEvent,
   TimeSignatureEvent,
@@ -13,6 +15,7 @@ import type {
   Song,
   SelectWidgetConfig,
   SongAccess,
+  AutomationValue,
 } from 'tuneflow';
 import { Midi } from '@tonejs/midi';
 
@@ -186,6 +189,7 @@ export class ImportMIDI extends TuneflowPlugin {
       });
       const trackClip = songTrack.createMIDIClip({ clipStartTick: insertOffset });
       let minStartTick = Number.MAX_SAFE_INTEGER;
+      // Add notes.
       for (const note of track.notes) {
         trackClip.createNote({
           pitch: note.midi,
@@ -194,6 +198,28 @@ export class ImportMIDI extends TuneflowPlugin {
           endTick: insertOffset + note.ticks + note.durationTicks,
         });
         minStartTick = Math.min(minStartTick, insertOffset + note.ticks);
+      }
+      // Add volume automation.
+      if (track.controlChanges[7]) {
+        const volumeTarget = new AutomationTarget(AutomationTargetType.VOLUME);
+        songTrack.getAutomation().addAutomation(volumeTarget);
+        const volumeTargetValue = songTrack
+          .getAutomation()
+          .getAutomationValueByTarget(volumeTarget) as AutomationValue;
+        for (const cc of track.controlChanges[7]) {
+          volumeTargetValue.addPoint(cc.ticks, cc.value);
+        }
+      }
+      // Add pan automation.
+      if (track.controlChanges[10]) {
+        const panTarget = new AutomationTarget(AutomationTargetType.PAN);
+        songTrack.getAutomation().addAutomation(panTarget);
+        const panTargetValue = songTrack
+          .getAutomation()
+          .getAutomationValueByTarget(panTarget) as AutomationValue;
+        for (const cc of track.controlChanges[10]) {
+          panTargetValue.addPoint(cc.ticks, cc.value);
+        }
       }
       if (minStartTick !== Number.MAX_SAFE_INTEGER) {
         trackClip.adjustClipLeft(minStartTick);

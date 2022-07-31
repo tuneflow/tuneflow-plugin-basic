@@ -1,4 +1,10 @@
-import { AudioPlugin, decodeAudioPluginTuneflowId, TuneflowPlugin, WidgetType } from 'tuneflow';
+import {
+  AudioPlugin,
+  decodeAudioPluginTuneflowId,
+  TrackType,
+  TuneflowPlugin,
+  WidgetType,
+} from 'tuneflow';
 import type { LabelText, TrackSelectorWidgetConfig, ParamDescriptor, Song } from 'tuneflow';
 import _ from 'underscore';
 
@@ -100,6 +106,9 @@ export class UpdateTrackPluginType extends TuneflowPlugin {
       throw new Error(`Track ${trackId} not found.`);
     }
     if (pluginIndex === 0) {
+      if (track.getType() !== TrackType.MIDI_TRACK) {
+        throw new Error('Sampler plugin can only be set on MIDI tracks.');
+      }
       const audioPluginInfo = decodeAudioPluginTuneflowId(newPluginTfId);
       // Plugin instance id will be re-generated.
       const newPlugin = new AudioPlugin(

@@ -1,3 +1,4 @@
+import { TrackType, TuneflowPlugin, WidgetType } from 'tuneflow';
 import type {
   InstrumentSelectorWidgetConfig,
   LabelText,
@@ -6,7 +7,6 @@ import type {
   SongAccess,
   TrackSelectorWidgetConfig,
 } from 'tuneflow';
-import { TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class LayerMultiplier extends TuneflowPlugin {
   static providerId(): string {
@@ -50,6 +50,7 @@ export class LayerMultiplier extends TuneflowPlugin {
           type: WidgetType.TrackSelector,
           config: {
             alwaysShowTrackInfo: true,
+            allowedTrackTypes: [TrackType.MIDI_TRACK],
           } as TrackSelectorWidgetConfig,
         },
       },

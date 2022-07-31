@@ -1,3 +1,4 @@
+import { TrackType, TuneflowPlugin, WidgetType } from 'tuneflow';
 import type {
   LabelText,
   ParamDescriptor,
@@ -5,7 +6,6 @@ import type {
   SongAccess,
   TrackPitchSelectorWidgetConfig,
 } from 'tuneflow';
-import { TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class TrackDivider extends TuneflowPlugin {
   static providerId(): string {
@@ -51,7 +51,9 @@ export class TrackDivider extends TuneflowPlugin {
         widget: {
           type: WidgetType.TrackPitchSelector,
           config: {
-            trackSelectorConfig: {},
+            trackSelectorConfig: {
+              allowedTrackTypes: [TrackType.MIDI_TRACK],
+            },
             pitchSelectorConfig: {},
           } as TrackPitchSelectorWidgetConfig,
         },

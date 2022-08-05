@@ -142,9 +142,23 @@ export class ImportMIDI extends TuneflowPlugin {
     const midi = new Midi(fileBuffer);
 
     const insertOffset = insertPosition === 'playhead' ? playheadTick : 0;
-
+    // For songs that are not 480 PPQ, we need to convert the ticks
+    // so that the beats and time remain unchanged.
+    const ppqScaleFactor = 480 / midi.header.ppq;
     // Optionally overwrite tempos and time signatures.
     if (overwriteTemposAndTimeSignatures) {
+      const newTimeSignatureEvents = [];
+      for (const rawTimeSignatureEvent of midi.header.timeSignatures) {
+        newTimeSignatureEvents.push(
+          new TimeSignatureEvent({
+            ticks:
+              insertOffset + ImportMIDI.scaleIntBy(rawTimeSignatureEvent.ticks, ppqScaleFactor),
+            numerator: rawTimeSignatureEvent.timeSignature[0],
+            denominator: rawTimeSignatureEvent.timeSignature[1],
+          }),
+        );
+      }
+      song.overwriteTimeSignatures(newTimeSignatureEvents);
       const newTempoEvents = [];
       if (insertOffset > 0) {
         // Insert a default tempo event at the beginning.
@@ -159,25 +173,13 @@ export class ImportMIDI extends TuneflowPlugin {
       for (const rawTempoEvent of midi.header.tempos) {
         newTempoEvents.push(
           new TempoEvent({
-            ticks: insertOffset + rawTempoEvent.ticks,
+            ticks: insertOffset + ImportMIDI.scaleIntBy(rawTempoEvent.ticks, ppqScaleFactor),
             time: rawTempoEvent.time as number,
             bpm: rawTempoEvent.bpm,
           }),
         );
       }
       song.overwriteTempoChanges(newTempoEvents);
-      const newTimeSignatureEvents = [];
-      for (const rawTimeSignatureEvent of midi.header.timeSignatures) {
-        newTimeSignatureEvents.push(
-          new TimeSignatureEvent({
-            ticks: insertOffset + rawTimeSignatureEvent.ticks,
-            // TODO: Verify if this order is correct.
-            numerator: rawTimeSignatureEvent.timeSignature[0],
-            denominator: rawTimeSignatureEvent.timeSignature[1],
-          }),
-        );
-      }
-      song.overwriteTimeSignatures(newTimeSignatureEvents);
     }
 
     // Add tracks and notes.
@@ -194,10 +196,14 @@ export class ImportMIDI extends TuneflowPlugin {
         trackClip.createNote({
           pitch: note.midi,
           velocity: Math.round(note.velocity * 127),
-          startTick: insertOffset + note.ticks,
-          endTick: insertOffset + note.ticks + note.durationTicks,
+          startTick: insertOffset + ImportMIDI.scaleIntBy(note.ticks, ppqScaleFactor),
+          endTick:
+            insertOffset + ImportMIDI.scaleIntBy(note.ticks + note.durationTicks, ppqScaleFactor),
         });
-        minStartTick = Math.min(minStartTick, insertOffset + note.ticks);
+        minStartTick = Math.min(
+          minStartTick,
+          insertOffset + ImportMIDI.scaleIntBy(note.ticks, ppqScaleFactor),
+        );
       }
       // Add volume automation.
       if (track.controlChanges[7]) {
@@ -207,7 +213,10 @@ export class ImportMIDI extends TuneflowPlugin {
           .getAutomation()
           .getAutomationValueByTarget(volumeTarget) as AutomationValue;
         for (const cc of track.controlChanges[7]) {
-          volumeTargetValue.addPoint(cc.ticks, cc.value);
+          volumeTargetValue.addPoint(
+            insertOffset + ImportMIDI.scaleIntBy(cc.ticks, ppqScaleFactor),
+            cc.value,
+          );
         }
       }
       // Add pan automation.
@@ -218,12 +227,19 @@ export class ImportMIDI extends TuneflowPlugin {
           .getAutomation()
           .getAutomationValueByTarget(panTarget) as AutomationValue;
         for (const cc of track.controlChanges[10]) {
-          panTargetValue.addPoint(cc.ticks, cc.value);
+          panTargetValue.addPoint(
+            insertOffset + ImportMIDI.scaleIntBy(cc.ticks, ppqScaleFactor),
+            cc.value,
+          );
         }
       }
       if (minStartTick !== Number.MAX_SAFE_INTEGER) {
         trackClip.adjustClipLeft(minStartTick);
       }
     }
+  }
+
+  private static scaleIntBy(val: number, factor: number) {
+    return Math.round(val * factor);
   }
 }

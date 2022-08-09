@@ -1,4 +1,4 @@
-import type { Clip, LabelText, ParamDescriptor, Song, SongAccess } from 'tuneflow';
+import type { Clip, ClipInfo, LabelText, ParamDescriptor, Song, SongAccess, Track } from 'tuneflow';
 import { InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class ClipClone extends TuneflowPlugin {
@@ -74,7 +74,7 @@ export class ClipClone extends TuneflowPlugin {
   }
 
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
-    const clipInfos = this.getParam<any[]>(params, 'clipInfos');
+    const clipInfos = this.getParam<ClipInfo[]>(params, 'clipInfos');
     const pasteToTrackId = this.getParam<string>(params, 'pasteToTrackId');
     const playheadTick = this.getParam<number>(params, 'playheadTick');
     if (clipInfos.length === 0) {
@@ -102,6 +102,13 @@ export class ClipClone extends TuneflowPlugin {
       newClip.moveClipTo(playheadTick, /* moveAssociatedTrackAutomationPoints= */ false);
       newTrack.insertClip(newClip);
     } else {
+      const sourceTrackIdSet = new Set<string>(clipInfos.map(clipInfo => clipInfo.trackId));
+      let targetTrack: Track | undefined;
+      if (sourceTrackIdSet.size === 1) {
+        // All cloning clips come from the same track.
+        // We can clone the clips to the target track.
+        targetTrack = song.getTrackById(pasteToTrackId);
+      }
       // Clone multiple clips, each clip will be pasted into
       // its original track at the playhead position.
       // Clone all clips first and paste them later so that
@@ -122,7 +129,7 @@ export class ClipClone extends TuneflowPlugin {
           );
         }
         newClip.moveClip(offsetTick, /* moveAssociatedTrackAutomationPoints= */ false);
-        const track = song.getTrackById(clipInfo.trackId);
+        const track = targetTrack ? targetTrack : song.getTrackById(clipInfo.trackId);
         if (!track) {
           throw new Error('Track not found.');
         }

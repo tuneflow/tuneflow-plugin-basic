@@ -1,23 +1,11 @@
-import {
-  AutomationTarget,
-  AutomationTargetType,
-  InjectSource,
-  TempoEvent,
-  TimeSignatureEvent,
-  TrackType,
-  TuneflowPlugin,
-  WidgetType,
-} from 'tuneflow';
+import { Song, InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
 import type {
   FileSelectorWidgetConfig,
   LabelText,
   ParamDescriptor,
-  Song,
   SelectWidgetConfig,
   SongAccess,
-  AutomationValue,
 } from 'tuneflow';
-import { Midi } from '@tonejs/midi';
 
 export class ImportMIDI extends TuneflowPlugin {
   static providerId(): string {
@@ -139,107 +127,9 @@ export class ImportMIDI extends TuneflowPlugin {
       params,
       'overwriteTemposAndTimeSignatures',
     );
-    const midi = new Midi(fileBuffer);
 
     const insertOffset = insertPosition === 'playhead' ? playheadTick : 0;
-    // For songs that are not 480 PPQ, we need to convert the ticks
-    // so that the beats and time remain unchanged.
-    const ppqScaleFactor = 480 / midi.header.ppq;
-    // Optionally overwrite tempos and time signatures.
-    if (overwriteTemposAndTimeSignatures) {
-      const newTimeSignatureEvents = [];
-      for (const rawTimeSignatureEvent of midi.header.timeSignatures) {
-        newTimeSignatureEvents.push(
-          new TimeSignatureEvent({
-            ticks:
-              insertOffset + ImportMIDI.scaleIntBy(rawTimeSignatureEvent.ticks, ppqScaleFactor),
-            numerator: rawTimeSignatureEvent.timeSignature[0],
-            denominator: rawTimeSignatureEvent.timeSignature[1],
-          }),
-        );
-      }
-      song.overwriteTimeSignatures(newTimeSignatureEvents);
-      const newTempoEvents = [];
-      if (insertOffset > 0) {
-        // Insert a default tempo event at the beginning.
-        newTempoEvents.push(
-          new TempoEvent({
-            ticks: 0,
-            time: 0,
-            bpm: 120,
-          }),
-        );
-      }
-      for (const rawTempoEvent of midi.header.tempos) {
-        newTempoEvents.push(
-          new TempoEvent({
-            ticks: insertOffset + ImportMIDI.scaleIntBy(rawTempoEvent.ticks, ppqScaleFactor),
-            time: rawTempoEvent.time as number,
-            bpm: rawTempoEvent.bpm,
-          }),
-        );
-      }
-      song.overwriteTempoChanges(newTempoEvents);
-    }
 
-    // Add tracks and notes.
-    for (const track of midi.tracks) {
-      const songTrack = song.createTrack({ type: TrackType.MIDI_TRACK });
-      songTrack.setInstrument({
-        program: track.instrument.number,
-        isDrum: track.instrument.percussion,
-      });
-      const trackClip = songTrack.createMIDIClip({ clipStartTick: insertOffset });
-      let minStartTick = Number.MAX_SAFE_INTEGER;
-      // Add notes.
-      for (const note of track.notes) {
-        trackClip.createNote({
-          pitch: note.midi,
-          velocity: Math.round(note.velocity * 127),
-          startTick: insertOffset + ImportMIDI.scaleIntBy(note.ticks, ppqScaleFactor),
-          endTick:
-            insertOffset + ImportMIDI.scaleIntBy(note.ticks + note.durationTicks, ppqScaleFactor),
-        });
-        minStartTick = Math.min(
-          minStartTick,
-          insertOffset + ImportMIDI.scaleIntBy(note.ticks, ppqScaleFactor),
-        );
-      }
-      // Add volume automation.
-      if (track.controlChanges[7]) {
-        const volumeTarget = new AutomationTarget(AutomationTargetType.VOLUME);
-        songTrack.getAutomation().addAutomation(volumeTarget);
-        const volumeTargetValue = songTrack
-          .getAutomation()
-          .getAutomationValueByTarget(volumeTarget) as AutomationValue;
-        for (const cc of track.controlChanges[7]) {
-          volumeTargetValue.addPoint(
-            insertOffset + ImportMIDI.scaleIntBy(cc.ticks, ppqScaleFactor),
-            cc.value,
-          );
-        }
-      }
-      // Add pan automation.
-      if (track.controlChanges[10]) {
-        const panTarget = new AutomationTarget(AutomationTargetType.PAN);
-        songTrack.getAutomation().addAutomation(panTarget);
-        const panTargetValue = songTrack
-          .getAutomation()
-          .getAutomationValueByTarget(panTarget) as AutomationValue;
-        for (const cc of track.controlChanges[10]) {
-          panTargetValue.addPoint(
-            insertOffset + ImportMIDI.scaleIntBy(cc.ticks, ppqScaleFactor),
-            cc.value,
-          );
-        }
-      }
-      if (minStartTick !== Number.MAX_SAFE_INTEGER) {
-        trackClip.adjustClipLeft(minStartTick);
-      }
-    }
-  }
-
-  private static scaleIntBy(val: number, factor: number) {
-    return Math.round(val * factor);
+    Song.importMIDI(song, fileBuffer, insertOffset, overwriteTemposAndTimeSignatures);
   }
 }

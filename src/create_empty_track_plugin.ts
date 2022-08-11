@@ -1,3 +1,4 @@
+import { AudioPlugin, TrackType, TuneflowPlugin, WidgetType } from 'tuneflow';
 import type {
   InputNumberWidgetConfig,
   LabelText,
@@ -5,7 +6,6 @@ import type {
   Song,
   SongAccess,
 } from 'tuneflow';
-import { TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class CreateEmptyTrack extends TuneflowPlugin {
   static providerId(): string {
@@ -73,6 +73,9 @@ export class CreateEmptyTrack extends TuneflowPlugin {
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     const type = this.getParam<number>(params, 'type');
     const insertIndex = this.getParam<number>(params, 'insertIndex');
-    song.createTrack({ type, index: insertIndex });
+    const newTrack = song.createTrack({ type, index: insertIndex });
+    if (type === TrackType.MIDI_TRACK) {
+      newTrack.setSamplerPlugin(AudioPlugin.DEFAULT_SYNTH);
+    }
   }
 }

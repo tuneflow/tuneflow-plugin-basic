@@ -73,7 +73,11 @@ export class CreateEmptyTrack extends TuneflowPlugin {
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     const type = this.getParam<number>(params, 'type');
     const insertIndex = this.getParam<number>(params, 'insertIndex');
-    const newTrack = song.createTrack({ type, index: insertIndex });
+    const newTrack = song.createTrack({
+      type,
+      index: insertIndex,
+      assignDefaultSamplerPlugin: true,
+    });
     if (type === TrackType.MIDI_TRACK) {
       newTrack.setSamplerPlugin(AudioPlugin.DEFAULT_SYNTH);
     }

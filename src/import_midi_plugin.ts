@@ -94,7 +94,7 @@ export class ImportMIDI extends TuneflowPlugin {
           type: WidgetType.None,
         },
         hidden: true,
-        injectFrom: InjectSource.TickAtPlayhead,
+        injectFrom: InjectSource.TickAtPlayheadSnappedToBeat,
       },
       overwriteTemposAndTimeSignatures: {
         displayName: {

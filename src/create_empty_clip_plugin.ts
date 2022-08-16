@@ -48,7 +48,7 @@ export class CreateEmptyClip extends TuneflowPlugin {
           type: WidgetType.InputNumber,
         },
         hidden: true,
-        injectFrom: InjectSource.TickAtPlayhead,
+        injectFrom: InjectSource.TickAtPlayheadSnappedToBeat,
       },
       trackId: {
         displayName: {

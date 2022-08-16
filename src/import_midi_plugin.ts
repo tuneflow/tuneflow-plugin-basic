@@ -101,7 +101,7 @@ export class ImportMIDI extends TuneflowPlugin {
           zh: '覆盖现有 Tempo 和 Time Signature',
           en: 'Overwrite existing tempos and time signatures.',
         },
-        defaultValue: false,
+        defaultValue: true,
         widget: {
           type: WidgetType.Switch,
         },

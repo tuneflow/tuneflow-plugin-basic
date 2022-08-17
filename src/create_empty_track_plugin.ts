@@ -79,7 +79,7 @@ export class CreateEmptyTrack extends TuneflowPlugin {
       assignDefaultSamplerPlugin: true,
     });
     if (type === TrackType.MIDI_TRACK) {
-      newTrack.setSamplerPlugin(AudioPlugin.DEFAULT_SYNTH);
+      newTrack.setSamplerPlugin(newTrack.createAudioPlugin(AudioPlugin.DEFAULT_SYNTH_TFID));
     }
   }
 }

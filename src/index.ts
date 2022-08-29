@@ -32,3 +32,4 @@ export { UpdateTrackAutomationParamEnabled } from './update_track_automation_par
 export { UpdateTrackPluginType } from './update_track_plugin_type_plugin';
 export { UpdateTrackPluginSettings } from './update_track_plugin_settings_plugin';
 export { UpdateClipAudioPath } from './update_clip_audio_path_plugin';
+export { ExtractNotesToTrack } from './extract_notes_to_track_plugin';

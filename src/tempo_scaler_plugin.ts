@@ -48,6 +48,7 @@ export class TempoScaler extends TuneflowPlugin {
             unit: '%',
           } as SliderWidgetConfig,
         },
+        adjustableWhenPluginIsApplied: true,
       },
     };
   }

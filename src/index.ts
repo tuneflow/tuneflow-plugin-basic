@@ -33,3 +33,5 @@ export { UpdateTrackPluginType } from './update_track_plugin_type_plugin';
 export { UpdateTrackPluginSettings } from './update_track_plugin_settings_plugin';
 export { UpdateClipAudioPath } from './update_clip_audio_path_plugin';
 export { ExtractNotesToTrack } from './extract_notes_to_track_plugin';
+export { UpdateTempo } from './update_tempo_plugin';
+export { UpdateTimeSignature } from './update_time_signature_plugin';

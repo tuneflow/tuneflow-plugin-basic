@@ -1,9 +1,8 @@
-import { InjectSource, TrackType, TuneflowPlugin, WidgetType } from 'tuneflow';
+import { Song, InjectSource, TrackType, TuneflowPlugin, WidgetType } from 'tuneflow';
 import type {
   LabelText,
   TrackSelectorWidgetConfig,
   ParamDescriptor,
-  Song,
   SongAccess,
   ReadAPIs,
 } from 'tuneflow';
@@ -111,9 +110,12 @@ export class CreateEmptyClip extends TuneflowPlugin {
         },
       });
     } else if (track.getType() === TrackType.MIDI_TRACK) {
+      const barBeats = song.getBarBeats(song.getLastTick());
+      const leadingBar = Song.getLeadingBar(insertAtTick, barBeats);
       track.createMIDIClip({
         clipStartTick: insertAtTick,
-        clipEndTick: insertAtTick + 4 * song.getTicksPerBar(),
+        clipEndTick:
+          insertAtTick + 4 * (leadingBar.ticksPerBeat as number) * (leadingBar.numerator as number),
       });
     }
   }

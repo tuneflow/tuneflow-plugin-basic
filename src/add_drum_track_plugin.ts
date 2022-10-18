@@ -65,7 +65,7 @@ export class AddDrumTrack extends TuneflowPlugin {
             resolve();
           },
           () => {
-            reject();
+            reject('Load drum track failed.');
           },
         );
       });

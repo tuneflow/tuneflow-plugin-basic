@@ -112,6 +112,9 @@ export class CreateEmptyClip extends TuneflowPlugin {
     } else if (track.getType() === TrackType.MIDI_TRACK) {
       const barBeats = song.getBarBeats(song.getLastTick());
       const leadingBar = Song.getLeadingBar(insertAtTick, barBeats);
+      if (!leadingBar) {
+        throw new Error('No leading bar was found.');
+      }
       track.createMIDIClip({
         clipStartTick: insertAtTick,
         clipEndTick:

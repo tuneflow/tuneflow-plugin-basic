@@ -82,7 +82,7 @@ export class RandomizeNoteVelocity extends TuneflowPlugin {
           zh: '力度下限',
           en: 'Velocity Lower Limit',
         },
-        defaultValue: 1,
+        defaultValue: 16,
         widget: {
           type: WidgetType.Slider,
           config: {
@@ -98,7 +98,7 @@ export class RandomizeNoteVelocity extends TuneflowPlugin {
           zh: '力度上限',
           en: 'Velocity Upper Limit',
         },
-        defaultValue: 127,
+        defaultValue: 111,
         widget: {
           type: WidgetType.Slider,
           config: {

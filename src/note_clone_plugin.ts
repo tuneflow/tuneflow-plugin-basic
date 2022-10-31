@@ -44,7 +44,7 @@ export class NoteClone extends TuneflowPlugin {
         hidden: true,
         injectFrom: InjectSource.EditingClipInfo,
       },
-      cloningNoteIds: {
+      cloningNotes: {
         displayName: {
           zh: '待复制音符',
           en: 'Cloning Notes',
@@ -76,8 +76,8 @@ export class NoteClone extends TuneflowPlugin {
     if (!editingClipInfo) {
       return;
     }
-    const cloningNoteIds = this.getParam<number[]>(params, 'cloningNoteIds');
-    if (!cloningNoteIds || cloningNoteIds.length === 0) {
+    const cloningNotes = this.getParam<any[]>(params, 'cloningNotes');
+    if (!cloningNotes || cloningNotes.length === 0) {
       return;
     }
     const pasteTick = this.getParam<number>(params, 'pasteTick');
@@ -91,23 +91,19 @@ export class NoteClone extends TuneflowPlugin {
         `Clip ${editingClipInfo.clipId} is not found in track ${editingClipInfo.trackId}`,
       );
     }
-    const notes = clip.getNotesByIds(cloningNoteIds);
-    if (notes.length === 0) {
-      return;
-    }
-    const minTick = _.min(notes.map(note => note.getStartTick()));
-    for (const note of notes) {
-      const offsetFromFirstNote = note.getStartTick() - minTick;
+    const minTick = _.min(cloningNotes.map(note => note.startTick));
+    for (const note of cloningNotes) {
+      const offsetFromFirstNote = note.startTick - minTick;
       const newStartTick = pasteTick + offsetFromFirstNote;
-      const newEndTick = pasteTick + offsetFromFirstNote + note.getEndTick() - note.getStartTick();
+      const newEndTick = pasteTick + offsetFromFirstNote + note.endTick - note.startTick;
       if (
         !Clip.isNoteInClip(newStartTick, newEndTick, clip.getClipStartTick(), clip.getClipEndTick())
       ) {
         continue;
       }
       clip.createNote({
-        pitch: note.getPitch(),
-        velocity: note.getVelocity(),
+        pitch: note.pitch,
+        velocity: note.velocity,
         startTick: newStartTick,
         endTick: newEndTick,
         updateClipRange: false,

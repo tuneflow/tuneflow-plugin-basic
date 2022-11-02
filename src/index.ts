@@ -37,3 +37,7 @@ export { UpdateTempo } from './update_tempo_plugin';
 export { UpdateTimeSignature } from './update_time_signature_plugin';
 export { RandomizeNoteVelocity } from './randomize_note_velocity_plugin';
 export { NoteSplit } from './note_split_plugin';
+export { TempoCreate } from './create_tempo_plugin';
+export { RemoveTempo } from './remove_tempo_plugin';
+export { TimeSignatureCreate } from './create_time_signature_plugin';
+export { RemoveTimeSignature } from './remove_time_signature_plugin';

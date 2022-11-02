@@ -1,0 +1,66 @@
+import type { LabelText, ParamDescriptor } from 'tuneflow';
+import { TuneflowPlugin, WidgetType, Song } from 'tuneflow';
+
+export class TimeSignatureCreate extends TuneflowPlugin {
+  static providerId(): string {
+    return 'andantei';
+  }
+
+  static pluginId(): string {
+    return 'time-signature-create';
+  }
+
+  static providerDisplayName(): LabelText {
+    return {
+      zh: 'Andantei行板',
+      en: 'Andantei',
+    };
+  }
+
+  static pluginDisplayName(): LabelText {
+    return {
+      zh: '添加拍号',
+      en: 'Add Time Signature',
+    };
+  }
+
+  static allowReset(): boolean {
+    return false;
+  }
+
+  params(): { [paramName: string]: ParamDescriptor } {
+    return {
+      insertAtTick: {
+        displayName: {
+          zh: '添加至',
+          en: 'Insert At',
+        },
+        defaultValue: undefined,
+        widget: {
+          type: WidgetType.None,
+        },
+        adjustable: false,
+        hidden: true,
+      },
+    };
+  }
+
+  async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
+    let insertAtTick = this.getParam<number>(params, 'insertAtTick');
+    const barBeats = song.getBarBeats(insertAtTick + 1);
+    const leadingBeat = Song.getLeadingBeat(insertAtTick, barBeats);
+    if (!leadingBeat) {
+      throw new Error('Cannot find leading beat for insert position.');
+    }
+    insertAtTick = leadingBeat.tick;
+    const leadingTimeSignature = song.getTimeSignatureAtTick(insertAtTick);
+    if (leadingTimeSignature.getTicks() === insertAtTick) {
+      return;
+    }
+    song.createTimeSignature({
+      ticks: insertAtTick,
+      numerator: leadingTimeSignature.getNumerator(),
+      denominator: leadingTimeSignature.getDenominator(),
+    });
+  }
+}

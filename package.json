@@ -1,6 +1,6 @@
 {
   "name": "tuneflow-plugin-basic",
-  "version": "0.30.0",
+  "version": "0.31.0",
   "description": "Basic TuneFlow plugins",
   "main": "src/index.ts",
   "scripts": {

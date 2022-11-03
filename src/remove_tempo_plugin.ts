@@ -47,12 +47,6 @@ export class RemoveTempo extends TuneflowPlugin {
 
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     const tempoIndex = this.getParam<number>(params, 'tempoIndex');
-    if (song.getTempoChanges().length <= 1) {
-      throw new Error('Song has to have at least one tempo change.');
-    }
-    if (tempoIndex === 0) {
-      throw new Error('Cannot remove the first tempo.');
-    }
-    song.getTempoChanges().splice(tempoIndex, /* deleteCount= */ 1);
+    song.removeTempoChange(tempoIndex);
   }
 }

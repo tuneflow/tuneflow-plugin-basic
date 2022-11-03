@@ -1,13 +1,13 @@
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
 import type { LabelText, ParamDescriptor, Song } from 'tuneflow';
 
-export class RemoveTimeSignature extends TuneflowPlugin {
+export class MoveTimeSignature extends TuneflowPlugin {
   static providerId(): string {
     return 'andantei';
   }
 
   static pluginId(): string {
-    return 'time-signature-remove';
+    return 'time-signature-move';
   }
 
   static providerDisplayName(): LabelText {
@@ -19,8 +19,8 @@ export class RemoveTimeSignature extends TuneflowPlugin {
 
   static pluginDisplayName(): LabelText {
     return {
-      zh: '删除拍号',
-      en: 'Remove Time Signature',
+      zh: '移动拍号',
+      en: 'Move Time Signature',
     };
   }
 
@@ -42,11 +42,24 @@ export class RemoveTimeSignature extends TuneflowPlugin {
         adjustable: false,
         hidden: true,
       },
+      moveToTick: {
+        displayName: {
+          zh: '移动至',
+          en: 'Move to',
+        },
+        defaultValue: undefined,
+        widget: {
+          type: WidgetType.None,
+        },
+        adjustable: false,
+        hidden: true,
+      },
     };
   }
 
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     const timeSignatureIndex = this.getParam<number>(params, 'timeSignatureIndex');
-    song.removeTimeSignature(timeSignatureIndex);
+    const moveToTick = this.getParam<number>(params, 'moveToTick');
+    song.moveTimeSignature(timeSignatureIndex, moveToTick);
   }
 }

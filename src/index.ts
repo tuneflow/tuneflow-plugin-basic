@@ -41,3 +41,5 @@ export { TempoCreate } from './create_tempo_plugin';
 export { RemoveTempo } from './remove_tempo_plugin';
 export { TimeSignatureCreate } from './create_time_signature_plugin';
 export { RemoveTimeSignature } from './remove_time_signature_plugin';
+export { MoveTempo } from './move_tempo_plugin';
+export { MoveTimeSignature } from './move_time_signature_plugin';

@@ -1,13 +1,13 @@
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
 import type { LabelText, ParamDescriptor, Song } from 'tuneflow';
 
-export class RemoveTimeSignature extends TuneflowPlugin {
+export class MoveTempo extends TuneflowPlugin {
   static providerId(): string {
     return 'andantei';
   }
 
   static pluginId(): string {
-    return 'time-signature-remove';
+    return 'tempo-move';
   }
 
   static providerDisplayName(): LabelText {
@@ -19,8 +19,8 @@ export class RemoveTimeSignature extends TuneflowPlugin {
 
   static pluginDisplayName(): LabelText {
     return {
-      zh: '删除拍号',
-      en: 'Remove Time Signature',
+      zh: '移动节奏',
+      en: 'Move Tempo',
     };
   }
 
@@ -30,10 +30,22 @@ export class RemoveTimeSignature extends TuneflowPlugin {
 
   params(): { [paramName: string]: ParamDescriptor } {
     return {
-      timeSignatureIndex: {
+      tempoIndex: {
         displayName: {
-          zh: '拍号序号',
-          en: 'Time Signature Index',
+          zh: '节奏序号',
+          en: 'Tempo Index',
+        },
+        defaultValue: undefined,
+        widget: {
+          type: WidgetType.None,
+        },
+        adjustable: false,
+        hidden: true,
+      },
+      moveToTick: {
+        displayName: {
+          zh: '移动至',
+          en: 'Move to',
         },
         defaultValue: undefined,
         widget: {
@@ -46,7 +58,8 @@ export class RemoveTimeSignature extends TuneflowPlugin {
   }
 
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
-    const timeSignatureIndex = this.getParam<number>(params, 'timeSignatureIndex');
-    song.removeTimeSignature(timeSignatureIndex);
+    const tempoIndex = this.getParam<number>(params, 'tempoIndex');
+    const moveToTick = this.getParam<number>(params, 'moveToTick');
+    song.moveTempo(tempoIndex, moveToTick);
   }
 }

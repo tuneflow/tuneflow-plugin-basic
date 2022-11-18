@@ -43,3 +43,7 @@ export { TimeSignatureCreate } from './create_time_signature_plugin';
 export { RemoveTimeSignature } from './remove_time_signature_plugin';
 export { MoveTempo } from './move_tempo_plugin';
 export { MoveTimeSignature } from './move_time_signature_plugin';
+export { CreateStructure } from './create_structure_plugin';
+export { UpdateStructure } from './update_structure_plugin';
+export { MoveStructure } from './move_structure_plugin';
+export { RemoveStructure } from './remove_structure_plugin';

@@ -119,7 +119,7 @@ export class UpdateTrackPluginSettings extends TuneflowPlugin {
 
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     const trackId = this.getParam<string>(params, 'trackId');
-    const isSamplerPlugin = this.getParam<boolean|undefined>(params, 'isSamplerPlugin');
+    const isSamplerPlugin = this.getParam<boolean | undefined>(params, 'isSamplerPlugin');
     const pluginId = this.getParam<string>(params, 'pluginId');
     const isEnabled = this.getParam<boolean | undefined>(params, 'isEnabled');
     const base64States = this.getParam<string | undefined>(params, 'base64States');
@@ -129,7 +129,7 @@ export class UpdateTrackPluginSettings extends TuneflowPlugin {
     if (!track) {
       throw new Error(`Track ${trackId} not found.`);
     }
-    if(!_.isBoolean(isSamplerPlugin)) {
+    if (!_.isBoolean(isSamplerPlugin)) {
       throw new Error(`isSamplerPlugin not specified`);
     }
     let plugin;

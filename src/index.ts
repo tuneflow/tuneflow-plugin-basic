@@ -47,3 +47,4 @@ export { CreateStructure } from './create_structure_plugin';
 export { UpdateStructure } from './update_structure_plugin';
 export { MoveStructure } from './move_structure_plugin';
 export { RemoveStructure } from './remove_structure_plugin';
+export { TrackAudioPluginRemover } from './remove_track_audio_plugin_plugin';

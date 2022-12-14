@@ -46,10 +46,23 @@ export class UpdateTrackPluginSettings extends TuneflowPlugin {
         adjustable: false,
         hidden: true,
       },
-      pluginIndex: {
+      isSamplerPlugin: {
         displayName: {
-          zh: '插件序号',
-          en: 'Plugin Index',
+          zh: '是否是音源插件',
+          en: 'Is Sampler Plugin',
+        },
+        defaultValue: undefined,
+        widget: {
+          type: WidgetType.None,
+          config: {},
+        },
+        adjustable: false,
+        hidden: true,
+      },
+      pluginId: {
+        displayName: {
+          zh: '插件ID',
+          en: 'Plugin ID',
         },
         defaultValue: undefined,
         widget: {
@@ -106,7 +119,8 @@ export class UpdateTrackPluginSettings extends TuneflowPlugin {
 
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     const trackId = this.getParam<string>(params, 'trackId');
-    const pluginIndex = this.getParam<number>(params, 'pluginIndex');
+    const isSamplerPlugin = this.getParam<boolean|undefined>(params, 'isSamplerPlugin');
+    const pluginId = this.getParam<string>(params, 'pluginId');
     const isEnabled = this.getParam<boolean | undefined>(params, 'isEnabled');
     const base64States = this.getParam<string | undefined>(params, 'base64States');
     const updateStates = this.getParam<boolean | undefined>(params, 'updateStates');
@@ -115,21 +129,25 @@ export class UpdateTrackPluginSettings extends TuneflowPlugin {
     if (!track) {
       throw new Error(`Track ${trackId} not found.`);
     }
-    if (pluginIndex === 0) {
-      const samplerPlugin = track.getSamplerPlugin();
-      if (!samplerPlugin) {
-        throw new Error('Sampler plugin not specified yet.');
-      }
-      if (_.isBoolean(isEnabled)) {
-        samplerPlugin.setIsEnabled(isEnabled);
-      }
-      if (updateStates) {
-        // Set states regardless since the states might be set to empty, which will cause
-        // TF-Link to reset the plugin.
-        samplerPlugin.setBase64States(base64States);
-      }
+    if(!_.isBoolean(isSamplerPlugin)) {
+      throw new Error(`isSamplerPlugin not specified`);
+    }
+    let plugin;
+    if (isSamplerPlugin) {
+      plugin = track.getSamplerPlugin();
     } else {
-      throw new Error('Updating audio plugin is not supported yet.');
+      plugin = track.getPluginByInstanceId(pluginId);
+    }
+    if (!plugin) {
+      throw new Error('Plugin not specified yet.');
+    }
+    if (_.isBoolean(isEnabled)) {
+      plugin.setIsEnabled(isEnabled);
+    }
+    if (updateStates) {
+      // Set states regardless since the states might be set to empty, which will cause
+      // TF-Link to reset the plugin.
+      plugin.setBase64States(base64States);
     }
   }
 }

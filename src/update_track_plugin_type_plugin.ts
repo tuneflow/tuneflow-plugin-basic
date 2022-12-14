@@ -1,6 +1,7 @@
 import {
   AudioPlugin,
   decodeAudioPluginTuneflowId,
+  SwitchWidgetConfig,
   TrackType,
   TuneflowPlugin,
   WidgetType,
@@ -52,6 +53,19 @@ export class UpdateTrackPluginType extends TuneflowPlugin {
         adjustable: false,
         hidden: true,
       },
+      isSamplerPlugin: {
+        displayName: {
+          zh: '是否为音源插件',
+          en: 'Is Sampler Plugin',
+        },
+        defaultValue: undefined,
+        widget: {
+          type: WidgetType.Switch,
+          config: {} as SwitchWidgetConfig,
+        },
+        adjustable: false,
+        hidden: true,
+      },
       pluginIndex: {
         displayName: {
           zh: '插件序号',
@@ -97,6 +111,7 @@ export class UpdateTrackPluginType extends TuneflowPlugin {
 
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     const trackId = this.getParam<string>(params, 'trackId');
+    const isSamplerPlugin = this.getParam<boolean>(params, 'isSamplerPlugin');
     const pluginIndex = this.getParam<number>(params, 'pluginIndex');
     const newPluginTfId = this.getParam<string>(params, 'newPluginTfId');
     const base64States = this.getParam<string | undefined>(params, 'base64States');
@@ -105,24 +120,24 @@ export class UpdateTrackPluginType extends TuneflowPlugin {
     if (!track) {
       throw new Error(`Track ${trackId} not found.`);
     }
-    if (pluginIndex === 0) {
-      if (track.getType() !== TrackType.MIDI_TRACK) {
-        throw new Error('Sampler plugin can only be set on MIDI tracks.');
-      }
-      const audioPluginInfo = decodeAudioPluginTuneflowId(newPluginTfId);
-      // Plugin instance id will be re-generated.
-      const newPlugin = new AudioPlugin(
-        audioPluginInfo.name,
-        audioPluginInfo.manufacturerName,
-        audioPluginInfo.pluginFormatName,
-        audioPluginInfo.pluginVersion,
-      );
-      if (_.isString(base64States) && base64States !== '') {
-        newPlugin.setBase64States(base64States);
-      }
+    if (isSamplerPlugin && track.getType() !== TrackType.MIDI_TRACK) {
+      throw new Error('Sampler plugin can only be set on MIDI tracks.');
+    }
+    const audioPluginInfo = decodeAudioPluginTuneflowId(newPluginTfId);
+    // Plugin instance id will be re-generated.
+    const newPlugin = new AudioPlugin(
+      audioPluginInfo.name,
+      audioPluginInfo.manufacturerName,
+      audioPluginInfo.pluginFormatName,
+      audioPluginInfo.pluginVersion,
+    );
+    if (_.isString(base64States) && base64States !== '') {
+      newPlugin.setBase64States(base64States);
+    }
+    if (isSamplerPlugin) {
       track.setSamplerPlugin(newPlugin, /* clearAutomation= */ true);
     } else {
-      throw new Error('Updating audio fx plugin is not supported yet.');
+      track.setAudioPluginAt(pluginIndex, newPlugin, /* clearAutomation= */ true);
     }
   }
 }

@@ -48,3 +48,6 @@ export { UpdateStructure } from './update_structure_plugin';
 export { MoveStructure } from './move_structure_plugin';
 export { RemoveStructure } from './remove_structure_plugin';
 export { TrackAudioPluginRemover } from './remove_track_audio_plugin_plugin';
+export { UpdateTrackSend } from './update_track_send_plugin';
+export { UpdateInputBus } from './update_input_bus_plugin';
+export { RemoveTrackSend } from './remove_track_send_plugin';

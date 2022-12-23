@@ -5,6 +5,7 @@ import type {
   LabelText,
   ParamDescriptor,
   SongAccess,
+  PluginInfo,
 } from 'tuneflow';
 
 export class UpdateTrackOutput extends TuneflowPlugin {
@@ -66,6 +67,12 @@ export class UpdateTrackOutput extends TuneflowPlugin {
   songAccess(): SongAccess {
     return {
       createTrack: true,
+    };
+  }
+
+  static pluginInfo(): PluginInfo | null {
+    return {
+      minRequiredDesktopVersion: '1.8.3',
     };
   }
 

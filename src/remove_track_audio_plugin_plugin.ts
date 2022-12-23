@@ -1,6 +1,7 @@
 import type {
   LabelText,
   ParamDescriptor,
+  PluginInfo,
   Song,
   SongAccess,
   TrackSelectorWidgetConfig,
@@ -37,6 +38,12 @@ export class TrackAudioPluginRemover extends TuneflowPlugin {
   songAccess(): SongAccess {
     return {
       removeTrack: true,
+    };
+  }
+
+  static pluginInfo(): PluginInfo | null {
+    return {
+      minRequiredDesktopVersion: '1.8.3',
     };
   }
 

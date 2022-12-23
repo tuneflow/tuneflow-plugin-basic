@@ -1,5 +1,6 @@
 import { Track, TuneflowPlugin, WidgetType } from 'tuneflow';
 import type {
+  PluginInfo,
   InputNumberWidgetConfig,
   TrackSelectorWidgetConfig,
   LabelText,
@@ -33,6 +34,12 @@ export class RemoveTrackSend extends TuneflowPlugin {
 
   static allowReset(): boolean {
     return false;
+  }
+
+  static pluginInfo(): PluginInfo | null {
+    return {
+      minRequiredDesktopVersion: '1.8.3',
+    };
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

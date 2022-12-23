@@ -1,12 +1,17 @@
 import {
   AudioPlugin,
   decodeAudioPluginTuneflowId,
-  SwitchWidgetConfig,
   TrackType,
   TuneflowPlugin,
   WidgetType,
 } from 'tuneflow';
-import type { LabelText, TrackSelectorWidgetConfig, ParamDescriptor, Song } from 'tuneflow';
+import type {
+  SwitchWidgetConfig,
+  LabelText,
+  TrackSelectorWidgetConfig,
+  ParamDescriptor,
+  Song,
+} from 'tuneflow';
 import _ from 'underscore';
 
 export class UpdateTrackPluginType extends TuneflowPlugin {

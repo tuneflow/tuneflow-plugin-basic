@@ -51,3 +51,4 @@ export { TrackAudioPluginRemover } from './remove_track_audio_plugin_plugin';
 export { UpdateTrackSend } from './update_track_send_plugin';
 export { UpdateInputBus } from './update_input_bus_plugin';
 export { RemoveTrackSend } from './remove_track_send_plugin';
+export { UpdateTrackOutput } from './update_track_output_plugin';

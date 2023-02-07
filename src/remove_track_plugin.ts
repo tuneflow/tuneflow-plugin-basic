@@ -1,10 +1,4 @@
-import type {
-  LabelText,
-  ParamDescriptor,
-  Song,
-  SongAccess,
-  TrackSelectorWidgetConfig,
-} from 'tuneflow';
+import type { ParamDescriptor, Song, TrackSelectorWidgetConfig } from 'tuneflow';
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class TrackRemover extends TuneflowPlugin {
@@ -14,30 +8,6 @@ export class TrackRemover extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'track-remover';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '删除轨道',
-      en: 'Delete Track',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
-  }
-
-  songAccess(): SongAccess {
-    return {
-      removeTrack: true,
-    };
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

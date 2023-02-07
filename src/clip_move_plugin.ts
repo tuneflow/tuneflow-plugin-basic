@@ -1,4 +1,4 @@
-import type { Clip, LabelText, ParamDescriptor, Song, Track } from 'tuneflow';
+import type { Clip, ParamDescriptor, Song, Track } from 'tuneflow';
 import { InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
 import _ from 'underscore';
 
@@ -9,24 +9,6 @@ export class ClipMove extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'clip-move';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '移动片段',
-      en: 'Move Clips',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

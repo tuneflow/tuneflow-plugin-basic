@@ -1,5 +1,5 @@
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
-import type { LabelText, TrackSelectorWidgetConfig, ParamDescriptor, Song } from 'tuneflow';
+import type { TrackSelectorWidgetConfig, ParamDescriptor, Song } from 'tuneflow';
 import _ from 'underscore';
 
 export class UpdateTrackPluginSettings extends TuneflowPlugin {
@@ -9,24 +9,6 @@ export class UpdateTrackPluginSettings extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'update-track-plugin-settings';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '更改轨道插件设置',
-      en: 'Update Track Plugin Settings',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

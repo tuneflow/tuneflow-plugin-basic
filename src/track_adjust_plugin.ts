@@ -1,6 +1,5 @@
 import type {
   InstrumentSelectorWidgetConfig,
-  LabelText,
   ParamDescriptor,
   SliderWidgetConfig,
   Song,
@@ -17,31 +16,6 @@ export class TrackAdjust extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'track-adjust';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '调整轨道',
-      en: 'Track Adjustment',
-    };
-  }
-
-  static pluginDescription(): LabelText | null {
-    return {
-      zh: '调整选中轨道的音量，乐器等',
-      en: 'Adjust the volume, instrument, etc. of the track',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

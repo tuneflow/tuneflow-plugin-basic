@@ -1,5 +1,5 @@
 import { Clip, InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
-import type { ClipInfo, LabelText, ParamDescriptor, Song } from 'tuneflow';
+import type { ClipInfo, ParamDescriptor, Song } from 'tuneflow';
 import _ from 'underscore';
 
 export class NoteClone extends TuneflowPlugin {
@@ -9,24 +9,6 @@ export class NoteClone extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'note-clone';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '复制音符',
-      en: 'Clone Notes',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

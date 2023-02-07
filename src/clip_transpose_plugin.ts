@@ -1,5 +1,5 @@
 import { ClipType, InjectSource, TuneflowPlugin, WidgetType, Note } from 'tuneflow';
-import type { LabelText, ParamDescriptor, SelectWidgetConfig, Song } from 'tuneflow';
+import type { ParamDescriptor, SelectWidgetConfig, Song } from 'tuneflow';
 
 export class ClipTranspose extends TuneflowPlugin {
   static providerId(): string {
@@ -8,31 +8,6 @@ export class ClipTranspose extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'clip-transpose';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '片段转调',
-      en: 'Clip Transpose',
-    };
-  }
-
-  static pluginDescription(): LabelText {
-    return {
-      zh: '对选中的片段进行转调',
-      en: 'Transpose the selected clips',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

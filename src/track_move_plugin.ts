@@ -1,5 +1,5 @@
 import { InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
-import type { LabelText, ParamDescriptor, Song, SongAccess } from 'tuneflow';
+import type { ParamDescriptor, Song } from 'tuneflow';
 
 export class TrackMove extends TuneflowPlugin {
   static providerId(): string {
@@ -8,24 +8,6 @@ export class TrackMove extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'track-move';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '移动轨道',
-      en: 'Move Track',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {
@@ -54,12 +36,6 @@ export class TrackMove extends TuneflowPlugin {
         },
         hidden: true,
       },
-    };
-  }
-
-  songAccess(): SongAccess {
-    return {
-      removeTrack: true,
     };
   }
 

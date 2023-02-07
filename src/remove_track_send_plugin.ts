@@ -1,11 +1,8 @@
 import { Track, TuneflowPlugin, WidgetType } from 'tuneflow';
 import type {
-  PluginInfo,
   InputNumberWidgetConfig,
   TrackSelectorWidgetConfig,
-  LabelText,
   ParamDescriptor,
-  SongAccess,
   Song,
 } from 'tuneflow';
 
@@ -16,30 +13,6 @@ export class RemoveTrackSend extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'remove-track-send';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '删除轨道发送',
-      en: 'Remove Track Send',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
-  }
-
-  static pluginInfo(): PluginInfo | null {
-    return {
-      minRequiredDesktopVersion: '1.8.3',
-    };
   }
 
   params(): { [paramName: string]: ParamDescriptor } {
@@ -73,12 +46,6 @@ export class RemoveTrackSend extends TuneflowPlugin {
         hidden: true,
         optional: true,
       },
-    };
-  }
-
-  songAccess(): SongAccess {
-    return {
-      createTrack: true,
     };
   }
 

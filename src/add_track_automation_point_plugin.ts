@@ -1,11 +1,5 @@
 import { TuneflowPlugin, WidgetType, AutomationTarget } from 'tuneflow';
-import type {
-  LabelText,
-  TrackSelectorWidgetConfig,
-  ParamDescriptor,
-  Song,
-  AutomationPoint,
-} from 'tuneflow';
+import type { TrackSelectorWidgetConfig, ParamDescriptor, Song, AutomationPoint } from 'tuneflow';
 
 export class AddTrackAutomationPoint extends TuneflowPlugin {
   static providerId(): string {
@@ -14,24 +8,6 @@ export class AddTrackAutomationPoint extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'add-track-automation-point';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '添加轨道自动化数据点',
-      en: 'Add Track Automation Point',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

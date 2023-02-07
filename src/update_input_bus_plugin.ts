@@ -3,10 +3,7 @@ import type {
   AuxTrackData,
   InputNumberWidgetConfig,
   TrackSelectorWidgetConfig,
-  LabelText,
   ParamDescriptor,
-  SongAccess,
-  PluginInfo,
 } from 'tuneflow';
 
 export class UpdateInputBus extends TuneflowPlugin {
@@ -16,30 +13,6 @@ export class UpdateInputBus extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'update-input-bus';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '更新输入母线',
-      en: 'Update Input Bus',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
-  }
-
-  static pluginInfo(): PluginInfo | null {
-    return {
-      minRequiredDesktopVersion: '1.8.3',
-    };
   }
 
   params(): { [paramName: string]: ParamDescriptor } {
@@ -73,12 +46,6 @@ export class UpdateInputBus extends TuneflowPlugin {
         hidden: true,
         optional: true,
       },
-    };
-  }
-
-  songAccess(): SongAccess {
-    return {
-      createTrack: true,
     };
   }
 

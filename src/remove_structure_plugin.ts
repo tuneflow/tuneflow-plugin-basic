@@ -1,5 +1,5 @@
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
-import type { LabelText, ParamDescriptor, Song } from 'tuneflow';
+import type { ParamDescriptor, Song } from 'tuneflow';
 
 export class RemoveStructure extends TuneflowPlugin {
   static providerId(): string {
@@ -8,24 +8,6 @@ export class RemoveStructure extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'structure-remove';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '删除结构',
-      en: 'Remove Structure',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

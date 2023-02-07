@@ -7,7 +7,6 @@ import {
 } from 'tuneflow';
 import type {
   SwitchWidgetConfig,
-  LabelText,
   TrackSelectorWidgetConfig,
   ParamDescriptor,
   Song,
@@ -21,24 +20,6 @@ export class UpdateTrackPluginType extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'update-track-plugin-type';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '更改轨道插件',
-      en: 'Change Track Plugin',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

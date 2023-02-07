@@ -1,10 +1,8 @@
 import type {
-  LabelText,
   ParamDescriptor,
   SelectWidgetConfig,
   SelectWidgetOption,
   Song,
-  SongAccess,
   SwitchWidgetConfig,
 } from 'tuneflow';
 import { TuneflowPlugin, WidgetType, TrackType } from 'tuneflow';
@@ -31,24 +29,6 @@ export class AddDrumTrack extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'add-drum-track';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '添加鼓点',
-      en: 'Add Drum Track',
-    };
-  }
-
-  static pluginDescription(): LabelText | null {
-    return null;
   }
 
   async init(): Promise<void> {
@@ -132,16 +112,6 @@ export class AddDrumTrack extends TuneflowPlugin {
           config: {} as SwitchWidgetConfig,
         },
       },
-    };
-  }
-
-  public allowManualApplyAdjust(): boolean {
-    return true;
-  }
-
-  songAccess(): SongAccess {
-    return {
-      createTrack: true,
     };
   }
 

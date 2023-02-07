@@ -1,4 +1,4 @@
-import type { LabelText, ParamDescriptor, Song, SongAccess } from 'tuneflow';
+import type { ParamDescriptor, Song } from 'tuneflow';
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class ClipRemover extends TuneflowPlugin {
@@ -8,30 +8,6 @@ export class ClipRemover extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'clip-remover';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '删除片段',
-      en: 'Delete Clips',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
-  }
-
-  songAccess(): SongAccess {
-    return {
-      removeTrack: true,
-    };
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

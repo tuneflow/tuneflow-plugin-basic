@@ -1,4 +1,4 @@
-import type { LabelText, ParamDescriptor, Song, SongAccess } from 'tuneflow';
+import type { ParamDescriptor, Song } from 'tuneflow';
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class TrackClone extends TuneflowPlugin {
@@ -8,24 +8,6 @@ export class TrackClone extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'track-clone';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '复制轨道',
-      en: 'Clone Track',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {
@@ -42,12 +24,6 @@ export class TrackClone extends TuneflowPlugin {
         },
         hidden: true,
       },
-    };
-  }
-
-  songAccess(): SongAccess {
-    return {
-      createTrack: true,
     };
   }
 

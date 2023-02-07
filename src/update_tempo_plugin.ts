@@ -1,5 +1,5 @@
 import { TempoEvent, TuneflowPlugin, WidgetType } from 'tuneflow';
-import type { LabelText, ParamDescriptor, Song } from 'tuneflow';
+import type { ParamDescriptor, Song } from 'tuneflow';
 
 export class UpdateTempo extends TuneflowPlugin {
   static providerId(): string {
@@ -8,20 +8,6 @@ export class UpdateTempo extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'update-tempo';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '更改节奏',
-      en: 'Change Tempo',
-    };
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

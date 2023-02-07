@@ -1,4 +1,4 @@
-import type { ClipInfo, LabelText, ParamDescriptor, Song } from 'tuneflow';
+import type { ClipInfo, ParamDescriptor, Song } from 'tuneflow';
 import { TuneflowPlugin, WidgetType, InjectSource } from 'tuneflow';
 
 export class NoteRemove extends TuneflowPlugin {
@@ -8,24 +8,6 @@ export class NoteRemove extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'note-remove';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '删除音符',
-      en: 'Delete Notes',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

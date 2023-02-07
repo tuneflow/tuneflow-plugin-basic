@@ -1,11 +1,5 @@
 import { AudioPlugin, TrackType, TuneflowPlugin, WidgetType } from 'tuneflow';
-import type {
-  InputNumberWidgetConfig,
-  LabelText,
-  ParamDescriptor,
-  Song,
-  SongAccess,
-} from 'tuneflow';
+import type { InputNumberWidgetConfig, ParamDescriptor, Song } from 'tuneflow';
 
 export class CreateEmptyTrack extends TuneflowPlugin {
   static providerId(): string {
@@ -14,24 +8,6 @@ export class CreateEmptyTrack extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'create-empty-track';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '创建空白轨道',
-      en: 'Create Empty Track',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   // TODO: Support different types of track.
@@ -61,12 +37,6 @@ export class CreateEmptyTrack extends TuneflowPlugin {
         },
         hidden: true,
       },
-    };
-  }
-
-  songAccess(): SongAccess {
-    return {
-      createTrack: true,
     };
   }
 

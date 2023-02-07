@@ -1,12 +1,5 @@
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
-import type {
-  TrackSelectorWidgetConfig,
-  Song,
-  LabelText,
-  ParamDescriptor,
-  SongAccess,
-  PluginInfo,
-} from 'tuneflow';
+import type { TrackSelectorWidgetConfig, Song, ParamDescriptor } from 'tuneflow';
 
 export class UpdateTrackOutput extends TuneflowPlugin {
   static providerId(): string {
@@ -15,24 +8,6 @@ export class UpdateTrackOutput extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'update-track-output';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '更新轨道输出',
-      en: 'Update Track Output',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {
@@ -61,18 +36,6 @@ export class UpdateTrackOutput extends TuneflowPlugin {
         optional: true,
         hidden: true,
       },
-    };
-  }
-
-  songAccess(): SongAccess {
-    return {
-      createTrack: true,
-    };
-  }
-
-  static pluginInfo(): PluginInfo | null {
-    return {
-      minRequiredDesktopVersion: '1.8.3',
     };
   }
 

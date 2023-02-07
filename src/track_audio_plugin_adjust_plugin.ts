@@ -1,10 +1,4 @@
-import type {
-  InputWidgetConfig,
-  LabelText,
-  ParamDescriptor,
-  Song,
-  TrackSelectorWidgetConfig,
-} from 'tuneflow';
+import type { InputWidgetConfig, ParamDescriptor, Song, TrackSelectorWidgetConfig } from 'tuneflow';
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class TrackAudioPluginAdjust extends TuneflowPlugin {
@@ -14,31 +8,6 @@ export class TrackAudioPluginAdjust extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'track-audio-plugin-adjust';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '调整音源/音效插件',
-      en: 'Audio Plugin Adjustment',
-    };
-  }
-
-  static pluginDescription(): LabelText | null {
-    return {
-      zh: '调整选中轨道的音源/音效插件',
-      en: 'Adjust the audio tracks of the track',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

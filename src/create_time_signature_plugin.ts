@@ -1,4 +1,4 @@
-import type { LabelText, ParamDescriptor } from 'tuneflow';
+import type { ParamDescriptor } from 'tuneflow';
 import { TuneflowPlugin, WidgetType, Song } from 'tuneflow';
 
 export class TimeSignatureCreate extends TuneflowPlugin {
@@ -8,24 +8,6 @@ export class TimeSignatureCreate extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'time-signature-create';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '添加拍号',
-      en: 'Add Time Signature',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

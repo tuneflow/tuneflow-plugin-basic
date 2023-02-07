@@ -1,4 +1,4 @@
-import type { ClipInfo, LabelText, ParamDescriptor, SelectWidgetConfig, Song } from 'tuneflow';
+import type { ClipInfo, ParamDescriptor, SelectWidgetConfig, Song } from 'tuneflow';
 import { TuneflowPlugin, WidgetType, InjectSource } from 'tuneflow';
 
 export class NoteTrim extends TuneflowPlugin {
@@ -8,24 +8,6 @@ export class NoteTrim extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'note-trim';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '剪裁音符',
-      en: 'Trim Notes',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

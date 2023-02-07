@@ -1,4 +1,4 @@
-import type { Clip, ClipInfo, LabelText, ParamDescriptor, Song, SongAccess, Track } from 'tuneflow';
+import type { Clip, ClipInfo, ParamDescriptor, Song, Track } from 'tuneflow';
 import { InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class ClipClone extends TuneflowPlugin {
@@ -8,24 +8,6 @@ export class ClipClone extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'clip-clone';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '复制片段',
-      en: 'Clone Clips',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {
@@ -64,12 +46,6 @@ export class ClipClone extends TuneflowPlugin {
         hidden: true,
         injectFrom: InjectSource.TickAtPlayhead,
       },
-    };
-  }
-
-  songAccess(): SongAccess {
-    return {
-      createTrack: true,
     };
   }
 

@@ -1,5 +1,5 @@
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
-import type { LabelText, ParamDescriptor, Song } from 'tuneflow';
+import type { ParamDescriptor, Song } from 'tuneflow';
 
 export class UpdateStructure extends TuneflowPlugin {
   static providerId(): string {
@@ -8,20 +8,6 @@ export class UpdateStructure extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'update-structure';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '更新结构',
-      en: 'Change Structure',
-    };
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

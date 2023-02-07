@@ -1,5 +1,5 @@
 import { InjectSource, ClipType, Clip, TuneflowPlugin, WidgetType } from 'tuneflow';
-import type { AudioClipData, LabelText, ParamDescriptor, Song } from 'tuneflow';
+import type { AudioClipData, ParamDescriptor, Song } from 'tuneflow';
 
 export class SplitClip extends TuneflowPlugin {
   static providerId(): string {
@@ -8,31 +8,6 @@ export class SplitClip extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'split-clip';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '分割片段',
-      en: 'Split Clips',
-    };
-  }
-
-  static pluginDescription(): LabelText {
-    return {
-      zh: '在当前位置将选中的片段分割成两段',
-      en: 'Split the selected clip into two at playhead',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

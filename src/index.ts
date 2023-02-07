@@ -1,8 +1,6 @@
 export { TempoScaler } from './tempo_scaler_plugin';
 export { TrackDivider } from './track_divider_plugin';
 export { TrackAdjust } from './track_adjust_plugin';
-export { LayerMultiplier } from './layer_multiplier_plugin';
-export { AddDrumTrack } from './add_drum_track_plugin';
 export { TrackRemover } from './remove_track_plugin';
 export { ClipRemover } from './remove_clip_plugin';
 export { ClipMove } from './clip_move_plugin';

@@ -1,4 +1,4 @@
-import type { ClipInfo, LabelText, ParamDescriptor, Song } from 'tuneflow';
+import type { ClipInfo, ParamDescriptor, Song } from 'tuneflow';
 import { InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class NoteVelocityAdjust extends TuneflowPlugin {
@@ -8,24 +8,6 @@ export class NoteVelocityAdjust extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'note-velocity-adjust';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '调整音符力度',
-      en: 'Adjust Note Velocity',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

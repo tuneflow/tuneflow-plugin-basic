@@ -1,4 +1,4 @@
-import type { ClipInfo, LabelText, ParamDescriptor, Song } from 'tuneflow';
+import type { ClipInfo, ParamDescriptor, Song } from 'tuneflow';
 import { TuneflowPlugin, WidgetType, InjectSource } from 'tuneflow';
 
 export class NoteCreate extends TuneflowPlugin {
@@ -8,24 +8,6 @@ export class NoteCreate extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'note-create';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '创建音符',
-      en: 'Create Note',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

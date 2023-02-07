@@ -1,5 +1,5 @@
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
-import type { LabelText, ParamDescriptor, Song } from 'tuneflow';
+import type { ParamDescriptor, Song } from 'tuneflow';
 
 export class RemoveTempo extends TuneflowPlugin {
   static providerId(): string {
@@ -8,24 +8,6 @@ export class RemoveTempo extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'tempo-remove';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '删除节奏',
-      en: 'Remove Tempo',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

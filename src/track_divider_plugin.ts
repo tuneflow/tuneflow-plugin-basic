@@ -1,11 +1,5 @@
 import { TrackType, TuneflowPlugin, WidgetType } from 'tuneflow';
-import type {
-  LabelText,
-  ParamDescriptor,
-  Song,
-  SongAccess,
-  TrackPitchSelectorWidgetConfig,
-} from 'tuneflow';
+import type { ParamDescriptor, Song, TrackPitchSelectorWidgetConfig } from 'tuneflow';
 
 export class TrackDivider extends TuneflowPlugin {
   static providerId(): string {
@@ -14,27 +8,6 @@ export class TrackDivider extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'track-divider';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '高低声部分离',
-      en: 'Treble Bass Separator',
-    };
-  }
-
-  static pluginDescription(): LabelText | null {
-    return {
-      zh: '将选中的轨道分成高低声部两轨。',
-      en: 'Divide the track into Treble and Bass by a given pitch.',
-    };
   }
 
   params(): { [paramName: string]: ParamDescriptor } {
@@ -62,17 +35,6 @@ export class TrackDivider extends TuneflowPlugin {
           en: 'Track will be divided into Treble and Bass: Treble contains notes higher(including) this pitch, and Bass contains notes lower than this pitch.',
         },
       },
-    };
-  }
-
-  public allowManualApplyAdjust(): boolean {
-    return true;
-  }
-
-  songAccess(): SongAccess {
-    return {
-      createTrack: true,
-      removeTrack: true,
     };
   }
 

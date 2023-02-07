@@ -1,4 +1,4 @@
-import type { Clip, LabelText, ParamDescriptor, SelectWidgetConfig, Song } from 'tuneflow';
+import type { Clip, ParamDescriptor, SelectWidgetConfig, Song } from 'tuneflow';
 import { TuneflowPlugin, WidgetType, InjectSource } from 'tuneflow';
 import _ from 'underscore';
 
@@ -9,24 +9,6 @@ export class ClipTrim extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'clip-trim';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '剪裁片段',
-      en: 'Trim Clip',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

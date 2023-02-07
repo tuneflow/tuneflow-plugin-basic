@@ -1,11 +1,5 @@
 import { Song, InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
-import type {
-  FileSelectorWidgetConfig,
-  LabelText,
-  ParamDescriptor,
-  SelectWidgetConfig,
-  SongAccess,
-} from 'tuneflow';
+import type { FileSelectorWidgetConfig, ParamDescriptor, SelectWidgetConfig } from 'tuneflow';
 
 export class ImportMIDI extends TuneflowPlugin {
   static providerId(): string {
@@ -14,31 +8,6 @@ export class ImportMIDI extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'import-midi';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '导入MIDI',
-      en: 'Import MIDI',
-    };
-  }
-
-  static pluginDescription(): LabelText | null {
-    return {
-      zh: '导入本地MIDI文件',
-      en: 'Import a local MIDI file',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {
@@ -106,15 +75,6 @@ export class ImportMIDI extends TuneflowPlugin {
           type: WidgetType.Switch,
         },
       },
-    };
-  }
-
-  public allowManualApplyAdjust(): boolean {
-    return true;
-  }
-  songAccess(): SongAccess {
-    return {
-      createTrack: true,
     };
   }
 

@@ -1,5 +1,5 @@
 import { TuneflowPlugin, WidgetType, InjectSource } from 'tuneflow';
-import type { ClipInfo, LabelText, ParamDescriptor, Song, SliderWidgetConfig } from 'tuneflow';
+import type { ClipInfo, ParamDescriptor, Song, SliderWidgetConfig } from 'tuneflow';
 import _ from 'underscore';
 
 export class RandomizeNoteVelocity extends TuneflowPlugin {
@@ -9,24 +9,6 @@ export class RandomizeNoteVelocity extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'randomize-note-velocity';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '音符力度随机化',
-      en: 'Randomize Note Velocity',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

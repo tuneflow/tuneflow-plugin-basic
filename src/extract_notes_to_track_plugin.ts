@@ -1,5 +1,5 @@
 import { TuneflowPlugin, WidgetType, InjectSource, TrackType, AudioPlugin } from 'tuneflow';
-import type { ClipInfo, LabelText, ParamDescriptor, Song, SongAccess } from 'tuneflow';
+import type { ClipInfo, ParamDescriptor, Song } from 'tuneflow';
 
 export class ExtractNotesToTrack extends TuneflowPlugin {
   static providerId(): string {
@@ -8,30 +8,6 @@ export class ExtractNotesToTrack extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'extract-notes-to-track';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '提取音符到新轨道',
-      en: 'Extract Notes to New Track',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
-  }
-
-  songAccess(): SongAccess {
-    return {
-      createTrack: true,
-    };
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

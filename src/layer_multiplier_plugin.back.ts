@@ -1,10 +1,8 @@
 import { TrackType, TuneflowPlugin, WidgetType } from 'tuneflow';
 import type {
   InstrumentSelectorWidgetConfig,
-  LabelText,
   ParamDescriptor,
   Song,
-  SongAccess,
   TrackSelectorWidgetConfig,
 } from 'tuneflow';
 
@@ -15,27 +13,6 @@ export class LayerMultiplier extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'layer-multiplier';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '音色叠加',
-      en: 'Layer Multiplier',
-    };
-  }
-
-  static pluginDescription(): LabelText | null {
-    return {
-      zh: '用一个不同音色的轨道来叠加选中轨道',
-      en: 'Layer the selected track with a different instrument',
-    };
   }
 
   params(): { [paramName: string]: ParamDescriptor } {
@@ -68,16 +45,6 @@ export class LayerMultiplier extends TuneflowPlugin {
           config: {} as InstrumentSelectorWidgetConfig,
         },
       },
-    };
-  }
-
-  public allowManualApplyAdjust(): boolean {
-    return true;
-  }
-
-  songAccess(): SongAccess {
-    return {
-      createTrack: true,
     };
   }
 

@@ -1,5 +1,5 @@
 import { TuneflowPlugin, WidgetType, AutomationTarget } from 'tuneflow';
-import type { LabelText, TrackSelectorWidgetConfig, ParamDescriptor, Song } from 'tuneflow';
+import type { TrackSelectorWidgetConfig, ParamDescriptor, Song } from 'tuneflow';
 
 export class UpdateTrackAutomationParamEnabled extends TuneflowPlugin {
   static providerId(): string {
@@ -8,24 +8,6 @@ export class UpdateTrackAutomationParamEnabled extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'update-track-automation-param-enabled';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '停用/恢复轨道自动化参数',
-      en: 'Resume/Pause Track Automation Parameter',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

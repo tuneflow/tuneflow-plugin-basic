@@ -1,0 +1,867 @@
+{
+  "plugins": [
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "add-track-automation-param",
+      "pluginDisplayName": {
+        "zh": "添加轨道自动化",
+        "en": "Add Track Automation"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "add-track-automation-point",
+      "pluginDisplayName": {
+        "zh": "添加轨道自动化数据点",
+        "en": "Add Track Automation Point"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "note-velocity-adjust",
+      "pluginDisplayName": {
+        "zh": "调整音符力度",
+        "en": "Adjust Note Velocity"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "clip-clone",
+      "pluginDisplayName": {
+        "zh": "复制片段",
+        "en": "Clone Clips"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "clip-move",
+      "pluginDisplayName": {
+        "zh": "移动片段",
+        "en": "Move Clips"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "clip-transpose",
+      "pluginDisplayName": {
+        "zh": "片段转调",
+        "en": "Clip Transpose"
+      },
+      "pluginDescription": {
+        "zh": "对选中的片段进行转调",
+        "en": "Transpose the selected clips"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "clip-trim",
+      "pluginDisplayName": {
+        "zh": "剪裁片段",
+        "en": "Trim Clip"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "create-empty-clip",
+      "pluginDisplayName": {
+        "zh": "创建空白片段",
+        "en": "Create Empty Clip"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "create-empty-track",
+      "pluginDisplayName": {
+        "zh": "创建空白轨道",
+        "en": "Create Empty Track"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "note-create",
+      "pluginDisplayName": {
+        "zh": "创建音符",
+        "en": "Create Note"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "create-structure",
+      "pluginDisplayName": {
+        "zh": "添加结构",
+        "en": "Add Structure"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "tempo-create",
+      "pluginDisplayName": {
+        "zh": "添加节奏",
+        "en": "Add Tempo"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "time-signature-create",
+      "pluginDisplayName": {
+        "zh": "添加拍号",
+        "en": "Add Time Signature"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "extract-notes-to-track",
+      "pluginDisplayName": {
+        "zh": "提取音符到新轨道",
+        "en": "Extract Notes to New Track"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "import-midi",
+      "pluginDisplayName": {
+        "zh": "导入MIDI",
+        "en": "Import MIDI"
+      },
+      "pluginDescription": {
+        "zh": "导入本地MIDI文件",
+        "en": "Import a local MIDI file"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false,
+        "allowManualApplyAdjust": true
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "structure-move",
+      "pluginDisplayName": {
+        "zh": "移动结构",
+        "en": "Move Structure"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "tempo-move",
+      "pluginDisplayName": {
+        "zh": "移动节奏",
+        "en": "Move Tempo"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "time-signature-move",
+      "pluginDisplayName": {
+        "zh": "移动拍号",
+        "en": "Move Time Signature"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "move-track-automation-points",
+      "pluginDisplayName": {
+        "zh": "移动轨道自动化数据点",
+        "en": "Move Track Automation Points"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "note-clone",
+      "pluginDisplayName": {
+        "zh": "复制音符",
+        "en": "Clone Notes"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "note-move",
+      "pluginDisplayName": {
+        "zh": "移动音符",
+        "en": "Move Notes"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "note-remove",
+      "pluginDisplayName": {
+        "zh": "删除音符",
+        "en": "Delete Notes"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "note-split",
+      "pluginDisplayName": {
+        "zh": "分割音符",
+        "en": "Split Notes"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "note-trim",
+      "pluginDisplayName": {
+        "zh": "剪裁音符",
+        "en": "Trim Notes"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "randomize-note-velocity",
+      "pluginDisplayName": {
+        "zh": "音符力度随机化",
+        "en": "Randomize Note Velocity"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "clip-remover",
+      "pluginDisplayName": {
+        "zh": "删除片段",
+        "en": "Delete Clips"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "structure-remove",
+      "pluginDisplayName": {
+        "zh": "删除结构",
+        "en": "Remove Structure"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "tempo-remove",
+      "pluginDisplayName": {
+        "zh": "删除节奏",
+        "en": "Remove Tempo"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "time-signature-remove",
+      "pluginDisplayName": {
+        "zh": "删除拍号",
+        "en": "Remove Time Signature"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "track-audio-plugin-remover",
+      "pluginDisplayName": {
+        "zh": "删除轨道音效插件",
+        "en": "Delete Track Audio Effects Plugin"
+      },
+      "version": "1.0.0",
+      "minRequiredDesktopVersion": "1.8.3",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "remove-track-automation-param",
+      "pluginDisplayName": {
+        "zh": "删除轨道自动化",
+        "en": "Remove Track Automation"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "remove-track-automation-point",
+      "pluginDisplayName": {
+        "zh": "删除轨道自动化数据点",
+        "en": "Remove Track Automation Points"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "track-remover",
+      "pluginDisplayName": {
+        "zh": "删除轨道",
+        "en": "Delete Track"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "remove-track-send",
+      "pluginDisplayName": {
+        "zh": "删除轨道发送",
+        "en": "Remove Track Send"
+      },
+      "version": "1.0.0",
+      "minRequiredDesktopVersion": "1.8.3",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "split-clip",
+      "pluginDisplayName": {
+        "zh": "分割片段",
+        "en": "Split Clips"
+      },
+      "pluginDescription": {
+        "zh": "在当前位置将选中的片段分割成两段",
+        "en": "Split the selected clip into two at playhead"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "tempo-scaler",
+      "pluginDisplayName": {
+        "zh": "播放速度",
+        "en": "Playback Speed"
+      },
+      "pluginDescription": {
+        "zh": "按比率调整整首歌的播放速度",
+        "en": "Adjust the playback speed of the whole song by a given ratio"
+      },
+      "version": "1.0.0"
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "track-adjust",
+      "pluginDisplayName": {
+        "zh": "调整轨道",
+        "en": "Track Adjustment"
+      },
+      "pluginDescription": {
+        "zh": "调整选中轨道的音量，乐器等",
+        "en": "Adjust the volume, instrument, etc. of the track"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "track-audio-plugin-adjust",
+      "pluginDisplayName": {
+        "zh": "调整音源/音效插件",
+        "en": "Audio Plugin Adjustment"
+      },
+      "pluginDescription": {
+        "zh": "调整选中轨道的音源/音效插件",
+        "en": "Adjust the audio plugins of the track"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "track-clone",
+      "pluginDisplayName": {
+        "zh": "复制轨道",
+        "en": "Clone Track"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "track-divider",
+      "pluginDisplayName": {
+        "zh": "高低声部分离",
+        "en": "Treble Bass Separator"
+      },
+      "pluginDescription": {
+        "zh": "将选中的轨道分成高低声部两轨。",
+        "en": "Divide the track into Treble and Bass by a given pitch."
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowManualApplyAdjust": true
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "track-move",
+      "pluginDisplayName": {
+        "zh": "移动轨道",
+        "en": "Move Track"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "update-clip-audio-path",
+      "pluginDisplayName": {
+        "zh": "替换片段音频文件",
+        "en": "Replace Clip Audio File"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "update-input-bus",
+      "pluginDisplayName": {
+        "zh": "更新输入母线",
+        "en": "Update Input Bus"
+      },
+      "version": "1.0.0",
+      "minRequiredDesktopVersion": "1.8.3",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "update-structure",
+      "pluginDisplayName": {
+        "zh": "更新结构",
+        "en": "Change Structure"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "update-tempo",
+      "pluginDisplayName": {
+        "zh": "更改节奏",
+        "en": "Change Tempo"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "update-time-signature",
+      "pluginDisplayName": {
+        "zh": "更改拍号",
+        "en": "Change Time Signature"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "update-track-automation-param-enabled",
+      "pluginDisplayName": {
+        "zh": "停用/恢复轨道自动化参数",
+        "en": "Pause/Resume Track Automation Parameter"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "update-track-automation-target",
+      "pluginDisplayName": {
+        "zh": "更新轨道自动化参数目标",
+        "en": "Update Track Automation Parameter Target"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "update-track-output",
+      "pluginDisplayName": {
+        "zh": "更新轨道输出",
+        "en": "Update Track Output"
+      },
+      "version": "1.0.0",
+      "minRequiredDesktopVersion": "1.8.3",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "update-track-plugin-settings",
+      "pluginDisplayName": {
+        "zh": "更改轨道插件设置",
+        "en": "Update Track Plugin Settings"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "update-track-plugin-type",
+      "pluginDisplayName": {
+        "zh": "更改轨道插件",
+        "en": "Change Track Plugin"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "update-track-send",
+      "pluginDisplayName": {
+        "zh": "更新轨道发送",
+        "en": "Update Track Send"
+      },
+      "version": "1.0.0",
+      "minRequiredDesktopVersion": "1.8.3",
+      "options": {
+        "allowReset": false
+      }
+    }
+  ]
+}

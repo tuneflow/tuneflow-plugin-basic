@@ -1,11 +1,5 @@
 import { Song, InjectSource, TrackType, TuneflowPlugin, WidgetType } from 'tuneflow';
-import type {
-  LabelText,
-  TrackSelectorWidgetConfig,
-  ParamDescriptor,
-  SongAccess,
-  ReadAPIs,
-} from 'tuneflow';
+import type { TrackSelectorWidgetConfig, ParamDescriptor, ReadAPIs } from 'tuneflow';
 
 export class CreateEmptyClip extends TuneflowPlugin {
   static providerId(): string {
@@ -14,24 +8,6 @@ export class CreateEmptyClip extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'create-empty-clip';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '创建空白片段',
-      en: 'Create Empty Clip',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   // TODO: Support different types of clips.
@@ -76,12 +52,6 @@ export class CreateEmptyClip extends TuneflowPlugin {
         hidden: true,
         optional: true,
       },
-    };
-  }
-
-  songAccess(): SongAccess {
-    return {
-      createTrack: true,
     };
   }
 

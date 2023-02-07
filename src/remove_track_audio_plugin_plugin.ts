@@ -1,11 +1,4 @@
-import type {
-  LabelText,
-  ParamDescriptor,
-  PluginInfo,
-  Song,
-  SongAccess,
-  TrackSelectorWidgetConfig,
-} from 'tuneflow';
+import type { ParamDescriptor, Song, TrackSelectorWidgetConfig } from 'tuneflow';
 import { TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class TrackAudioPluginRemover extends TuneflowPlugin {
@@ -15,36 +8,6 @@ export class TrackAudioPluginRemover extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'track-audio-plugin-remover';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '删除轨道音效插件',
-      en: 'Delete Track Audio Effects Plugin',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
-  }
-
-  songAccess(): SongAccess {
-    return {
-      removeTrack: true,
-    };
-  }
-
-  static pluginInfo(): PluginInfo | null {
-    return {
-      minRequiredDesktopVersion: '1.8.3',
-    };
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

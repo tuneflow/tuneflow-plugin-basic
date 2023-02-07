@@ -1,5 +1,5 @@
 import { Song, StructureType, TuneflowPlugin, WidgetType } from 'tuneflow';
-import type { LabelText, ParamDescriptor } from 'tuneflow';
+import type { ParamDescriptor } from 'tuneflow';
 
 export class CreateStructure extends TuneflowPlugin {
   static providerId(): string {
@@ -8,20 +8,6 @@ export class CreateStructure extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'create-structure';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '添加结构',
-      en: 'Add Structure',
-    };
   }
 
   params(): { [paramName: string]: ParamDescriptor } {
@@ -44,8 +30,8 @@ export class CreateStructure extends TuneflowPlugin {
     const tick = this.getParam<number>(params, 'structureTick');
     const barBeats = song.getBarBeats(tick + 1);
     const leadingBeat = Song.getLeadingBeat(tick, barBeats);
-    if(!leadingBeat) {
-      throw new Error("Cannot find leading beat");
+    if (!leadingBeat) {
+      throw new Error('Cannot find leading beat');
     }
     const leadingStructure = song.getStructureAtTick(tick);
     if (leadingStructure && tick === leadingStructure.getTick()) {

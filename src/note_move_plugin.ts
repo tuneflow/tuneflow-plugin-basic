@@ -1,4 +1,4 @@
-import type { ClipInfo, LabelText, ParamDescriptor, Song } from 'tuneflow';
+import type { ClipInfo, ParamDescriptor, Song } from 'tuneflow';
 import { InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
 
 export class NoteMove extends TuneflowPlugin {
@@ -8,24 +8,6 @@ export class NoteMove extends TuneflowPlugin {
 
   static pluginId(): string {
     return 'note-move';
-  }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '移动音符',
-      en: 'Move Notes',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
   }
 
   params(): { [paramName: string]: ParamDescriptor } {

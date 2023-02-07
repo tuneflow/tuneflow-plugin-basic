@@ -1,5 +1,5 @@
 import { ClipType, InjectSource, TuneflowPlugin, WidgetType } from 'tuneflow';
-import type { ClipInfo, LabelText, ParamDescriptor, Song, SongAccess, ReadAPIs } from 'tuneflow';
+import type { ClipInfo, ParamDescriptor, Song, ReadAPIs } from 'tuneflow';
 import _ from 'underscore';
 
 export class UpdateClipAudioPath extends TuneflowPlugin {
@@ -10,25 +10,7 @@ export class UpdateClipAudioPath extends TuneflowPlugin {
   static pluginId(): string {
     return 'update-clip-audio-path';
   }
-
-  static providerDisplayName(): LabelText {
-    return {
-      zh: 'Andantei行板',
-      en: 'Andantei',
-    };
-  }
-
-  static pluginDisplayName(): LabelText {
-    return {
-      zh: '替换片段音频文件',
-      en: 'Replace Clip Audio File',
-    };
-  }
-
-  static allowReset(): boolean {
-    return false;
-  }
-
+  
   params(): { [paramName: string]: ParamDescriptor } {
     return {
       editingClipInfo: {
@@ -55,12 +37,6 @@ export class UpdateClipAudioPath extends TuneflowPlugin {
         },
         adjustable: false,
       },
-    };
-  }
-
-  songAccess(): SongAccess {
-    return {
-      createTrack: true,
     };
   }
 

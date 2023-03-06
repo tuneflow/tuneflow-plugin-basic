@@ -14,7 +14,7 @@ export class RemoveTempo extends TuneflowPlugin {
     return {
       tempoIndex: {
         displayName: {
-          zh: '节奏序号',
+          zh: '曲速序号',
           en: 'Tempo Index',
         },
         defaultValue: undefined,

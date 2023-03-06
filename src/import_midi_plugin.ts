@@ -67,7 +67,7 @@ export class ImportMIDI extends TuneflowPlugin {
       },
       overwriteTemposAndTimeSignatures: {
         displayName: {
-          zh: '覆盖现有节奏和拍号',
+          zh: '覆盖现有曲速和拍号',
           en: 'Overwrite Tempos and Time Signatures',
         },
         defaultValue: true,

@@ -14,7 +14,7 @@ export class UpdateTempo extends TuneflowPlugin {
     return {
       newTempo: {
         displayName: {
-          zh: '节奏 (BPM)',
+          zh: '曲速 (BPM)',
           en: 'Tempo (BPM)',
         },
         defaultValue: undefined,
@@ -36,7 +36,7 @@ export class UpdateTempo extends TuneflowPlugin {
       },
       overwriteAll: {
         displayName: {
-          zh: '覆盖所有节奏',
+          zh: '覆盖所有曲速',
           en: 'Overwrite all tempos',
         },
         defaultValue: false,

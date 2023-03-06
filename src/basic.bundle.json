@@ -188,7 +188,7 @@
       },
       "pluginId": "tempo-create",
       "pluginDisplayName": {
-        "zh": "添加节奏",
+        "zh": "添加曲速",
         "en": "Add Tempo"
       },
       "version": "1.0.0",
@@ -273,7 +273,7 @@
       },
       "pluginId": "tempo-move",
       "pluginDisplayName": {
-        "zh": "移动节奏",
+        "zh": "移动曲速",
         "en": "Move Tempo"
       },
       "version": "1.0.0",
@@ -449,7 +449,7 @@
       },
       "pluginId": "tempo-remove",
       "pluginDisplayName": {
-        "zh": "删除节奏",
+        "zh": "删除曲速",
         "en": "Remove Tempo"
       },
       "version": "1.0.0",
@@ -741,7 +741,7 @@
       },
       "pluginId": "update-tempo",
       "pluginDisplayName": {
-        "zh": "更改节奏",
+        "zh": "更改曲速",
         "en": "Change Tempo"
       },
       "version": "1.0.0",

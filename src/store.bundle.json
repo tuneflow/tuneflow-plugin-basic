@@ -1,0 +1,27 @@
+{
+  "plugins": [
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "import-midi",
+      "pluginDisplayName": {
+        "zh": "导入MIDI",
+        "en": "Import MIDI"
+      },
+      "pluginDescription": {
+        "zh": "导入本地MIDI文件",
+        "en": "Import a local MIDI file"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false,
+        "allowManualApplyAdjust": true
+      },
+      "triggers": ["song"],
+      "categories": ["import"]
+    }
+  ]
+}

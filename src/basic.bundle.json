@@ -186,6 +186,22 @@
         "zh": "Andantei行板",
         "en": "Andantei"
       },
+      "pluginId": "create-lyric-line",
+      "pluginDisplayName": {
+        "zh": "添加歌词",
+        "en": "Add Lyric Line"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
       "pluginId": "tempo-create",
       "pluginDisplayName": {
         "zh": "添加曲速",
@@ -530,6 +546,22 @@
       },
       "version": "1.0.0",
       "minRequiredDesktopVersion": "1.8.3",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "remove-lyric-line",
+      "pluginDisplayName": {
+        "zh": "删除歌词",
+        "en": "Remove Lyric Line"
+      },
+      "version": "1.0.0",
       "options": {
         "allowReset": false
       }

@@ -1,4 +1,4 @@
-import { ClipType, InjectSource, TuneflowPlugin, WidgetType, Note } from 'tuneflow';
+import { ClipType, InjectSource, TuneflowPlugin, WidgetType, Note, Clip } from 'tuneflow';
 import type { ParamDescriptor, SelectWidgetConfig, Song } from 'tuneflow';
 
 export class ClipTranspose extends TuneflowPlugin {
@@ -94,7 +94,13 @@ export class ClipTranspose extends TuneflowPlugin {
           note.setPitch(newPitch);
         }
       } else if (clip.getType() === ClipType.AUDIO_CLIP) {
-        // TODO: Support audio pitch shift.
+        const currentPitchOffset = clip.getAudioPitchOffset();
+        clip.setAudioPitchOffset(
+          Math.min(
+            Clip.MAX_AUDIO_PITCH_OFFSET,
+            Math.max(Clip.MIN_AUDIO_PITCH_OFFSET, currentPitchOffset + pitchOffset),
+          ),
+        );
       }
     }
   }

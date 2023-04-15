@@ -122,6 +122,23 @@
         "zh": "Andantei行板",
         "en": "Andantei"
       },
+      "pluginId": "clip-time-stretch",
+      "pluginDisplayName": {
+        "zh": "伸缩片段",
+        "en": "Time-Stretch Clip"
+      },
+      "minRequiredDesktopVersion": "1.9.2",
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
       "pluginId": "create-empty-clip",
       "pluginDisplayName": {
         "zh": "创建空白片段",

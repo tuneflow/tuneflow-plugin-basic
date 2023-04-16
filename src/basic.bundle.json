@@ -127,7 +127,6 @@
         "zh": "伸缩片段",
         "en": "Time-Stretch Clip"
       },
-      "minRequiredDesktopVersion": "1.9.2",
       "version": "1.0.0",
       "options": {
         "allowReset": false

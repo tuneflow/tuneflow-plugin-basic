@@ -857,6 +857,28 @@
       "options": {
         "allowReset": false
       }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "import-multiple-files",
+      "pluginDisplayName": {
+        "zh": "导入文件",
+        "en": "Import File(s)"
+      },
+      "pluginDescription": {
+        "zh": "导入本地文件",
+        "en": "Import local file(s)"
+      },
+      "version": "1.0.0",
+      "minRequiredDesktopVersion": "1.8.9",
+      "options": {
+        "allowReset": false
+      },
+      "categories": ["import"]
     }
   ]
 }

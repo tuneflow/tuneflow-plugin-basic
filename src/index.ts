@@ -50,3 +50,4 @@ export { UpdateTrackSend } from './update_track_send_plugin';
 export { UpdateInputBus } from './update_input_bus_plugin';
 export { RemoveTrackSend } from './remove_track_send_plugin';
 export { UpdateTrackOutput } from './update_track_output_plugin';
+export { ImportMultipleFiles } from './import_multiple_files_plugin';

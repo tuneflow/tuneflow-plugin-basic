@@ -1,4 +1,11 @@
-import { Song, TuneflowPlugin, WidgetType, SUPPORTED_AUDIO_FORMATS, TrackType } from 'tuneflow';
+import {
+  Song,
+  TuneflowPlugin,
+  WidgetType,
+  SUPPORTED_AUDIO_FORMATS,
+  TrackType,
+  ClipType,
+} from 'tuneflow';
 import type { ParamDescriptor, Track } from 'tuneflow';
 import _ from 'underscore';
 
@@ -67,15 +74,11 @@ export class ImportMultipleFiles extends TuneflowPlugin {
       if (this.isMidiFileType(fileExtension)) {
         const fileContent = await file.arrayBuffer();
         // Overwrite tempos and time signatures if there are nothing in the project.
-        const overwriteTemposAndTimeSignatures =
-          song.getTracks().length === 0 ||
-          !song.getTracks()[0].getClips() ||
-          song.getTracks()[0].getClips().length === 0;
         const updatedTracks = Song.importMIDI(
           song,
           fileContent,
           insertTick,
-          overwriteTemposAndTimeSignatures,
+          /* overwriteTemposAndTimeSignatures= */ this.isSongEmpty(song),
           /* insertAtIndex= */ insertTrackIndex,
         );
         insertTrackIndex += updatedTracks.length;
@@ -131,5 +134,28 @@ export class ImportMultipleFiles extends TuneflowPlugin {
     const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
     const audioCtx = new AudioContext();
     return audioCtx.decodeAudioData(fileBuffer);
+  }
+
+  private isSongEmpty(song: Song) {
+    if (!song.getTracks() || song.getTracks().length === 0) {
+      return true;
+    }
+    if (song.getTracks().length > 1) {
+      return false;
+    }
+    // There is only 1 track.
+    const onlyTrack = song.getTracks()[0];
+    if (!onlyTrack.getClips() || onlyTrack.getClips().length === 0) {
+      return true;
+    }
+    if (onlyTrack.getClips().length > 1) {
+      return false;
+    }
+    // There is only 1 clip in the only track.
+    const onlyClip = onlyTrack.getClips()[0];
+    if (onlyClip.getType() !== ClipType.MIDI_CLIP) {
+      return false;
+    }
+    return !onlyClip.getRawNotes() || onlyClip.getRawNotes().length === 0;
   }
 }

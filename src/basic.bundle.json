@@ -889,6 +889,22 @@
       "options": {
         "allowReset": false
       }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "update-lyrics",
+      "pluginDisplayName": {
+        "zh": "更新歌词",
+        "en": "Update Lyrics"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
     }
   ]
 }

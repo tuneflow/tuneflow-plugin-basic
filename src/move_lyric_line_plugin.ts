@@ -55,6 +55,10 @@ export class MoveLyricLine extends TuneflowPlugin {
     const index = this.getParam<number>(params, 'index');
     const startTick = this.getParam<number>(params, 'startTick');
     const endTick = this.getParam<number>(params, 'endTick');
-    song.moveLyricLine(index, startTick, endTick);
+    const line = song.getLyrics().getLines()[index];
+    if (!line) {
+      throw new Error('Line not found');
+    }
+    line.moveTo(startTick, endTick);
   }
 }

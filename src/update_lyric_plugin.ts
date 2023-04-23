@@ -22,8 +22,9 @@ export class UpdateLyrics extends TuneflowPlugin {
           type: WidgetType.TextArea,
         },
         hidden: true,
+        optional: true,
       },
-      lyricLineTick: {
+      index: {
         displayName: {
           zh: '位置',
           en: 'Position',
@@ -39,8 +40,10 @@ export class UpdateLyrics extends TuneflowPlugin {
 
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     const words = this.getParam<string>(params, 'lyricLineWords');
-    const tick = this.getParam<number>(params, 'lyricLineTick');
-    const index = song.getLyricLineIndexAtTick(tick);
-    song.updateLyricLineAtIndex(index, words);
+    const index = this.getParam<number>(params, 'index');
+    await song
+      .getLyrics()
+      .getLines()
+      [index].replaceWithString(words ? words : '');
   }
 }

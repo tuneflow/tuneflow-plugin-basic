@@ -29,6 +29,6 @@ export class RemoveLyricLine extends TuneflowPlugin {
 
   async run(song: Song, params: { [paramName: string]: any }): Promise<void> {
     const index = this.getParam<number>(params, 'index');
-    song.removeLyricLineAtIndex(index);
+    song.getLyrics().removeLineAtIndex(index);
   }
 }

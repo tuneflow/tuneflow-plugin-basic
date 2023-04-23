@@ -122,6 +122,22 @@
         "zh": "Andantei行板",
         "en": "Andantei"
       },
+      "pluginId": "clip-time-stretch",
+      "pluginDisplayName": {
+        "zh": "伸缩片段",
+        "en": "Time-Stretch Clip"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
       "pluginId": "create-empty-clip",
       "pluginDisplayName": {
         "zh": "创建空白片段",
@@ -905,6 +921,28 @@
       "options": {
         "allowReset": false
       }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "import-multiple-files",
+      "pluginDisplayName": {
+        "zh": "导入文件",
+        "en": "Import File(s)"
+      },
+      "pluginDescription": {
+        "zh": "导入本地文件",
+        "en": "Import local file(s)"
+      },
+      "version": "1.0.0",
+      "minRequiredDesktopVersion": "1.8.9",
+      "options": {
+        "allowReset": false
+      },
+      "categories": ["import"]
     }
   ]
 }

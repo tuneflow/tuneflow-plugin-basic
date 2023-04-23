@@ -202,6 +202,22 @@
         "zh": "Andantei行板",
         "en": "Andantei"
       },
+      "pluginId": "create-lyric-line",
+      "pluginDisplayName": {
+        "zh": "添加歌词",
+        "en": "Add Lyric Line"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
       "pluginId": "tempo-create",
       "pluginDisplayName": {
         "zh": "添加曲速",
@@ -302,6 +318,22 @@
       "pluginDisplayName": {
         "zh": "移动轨道自动化数据点",
         "en": "Move Track Automation Points"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "move-lyric-line",
+      "pluginDisplayName": {
+        "zh": "移动歌词",
+        "en": "Move Lyric Line"
       },
       "version": "1.0.0",
       "options": {
@@ -546,6 +578,22 @@
       },
       "version": "1.0.0",
       "minRequiredDesktopVersion": "1.8.3",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "remove-lyric-line",
+      "pluginDisplayName": {
+        "zh": "删除歌词",
+        "en": "Remove Lyric Line"
+      },
+      "version": "1.0.0",
       "options": {
         "allowReset": false
       }
@@ -854,6 +902,22 @@
       },
       "version": "1.0.0",
       "minRequiredDesktopVersion": "1.8.3",
+      "options": {
+        "allowReset": false
+      }
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "update-lyrics",
+      "pluginDisplayName": {
+        "zh": "更新歌词",
+        "en": "Update Lyrics"
+      },
+      "version": "1.0.0",
       "options": {
         "allowReset": false
       }

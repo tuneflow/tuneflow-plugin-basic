@@ -22,6 +22,42 @@
       },
       "triggers": ["song"],
       "categories": ["import"]
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "import-lrc",
+      "pluginDisplayName": {
+        "zh": "导入 .lrc 歌词",
+        "en": "Import .lrc Lyrics"
+      },
+      "pluginDescription": {
+        "zh": "导入本地 .lrc 歌词文件",
+        "en": "Import a local .lrc lyrics file"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false,
+        "allowManualApplyAdjust": true
+      },
+      "triggers": ["song"],
+      "categories": ["import"],
+      "notices": {
+        "checkResultsInLyricsEditor": {
+          "title": {
+            "zh": "如何查看歌词",
+            "en": "Check Out Imported Lyrics"
+          },
+          "content": {
+            "zh": "导入歌词后，你可以在歌词面板或全局轨道->歌词轨中查看和编辑导入的歌词",
+            "en": "After import, you can check out lyrics in the Lyrics Editor or in Global Tracks -> Lyrics track"
+          },
+          "showPopup": true
+        }
+      }
     }
   ]
 }

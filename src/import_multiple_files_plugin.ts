@@ -5,11 +5,15 @@ import {
   SUPPORTED_AUDIO_FORMATS,
   TrackType,
   ClipType,
+  SUPPORTED_IMPORT_FILE_FORMATS,
 } from 'tuneflow';
 import type { ParamDescriptor, Track } from 'tuneflow';
 import _ from 'underscore';
+const lrcKitLib = () => import('lrc-kit');
 
 export class ImportMultipleFiles extends TuneflowPlugin {
+  static lrcParserLibLoader: any;
+
   static providerId(): string {
     return 'andantei';
   }
@@ -61,7 +65,7 @@ export class ImportMultipleFiles extends TuneflowPlugin {
     const fileList = this.getParam<File[]>(params, 'fileList');
     const insertTick = this.getParam<number>(params, 'insertTick');
     const insertTrackId = this.getParam<string>(params, 'insertTrackId');
-    const allowedFileTypes = ['mid', 'midi', ...SUPPORTED_AUDIO_FORMATS];
+    const allowedFileTypes = SUPPORTED_IMPORT_FILE_FORMATS;
     let insertTrackIndex = song.getTrackIndex(insertTrackId);
     if (insertTrackIndex < 0) {
       insertTrackIndex = song.getTracks().length;
@@ -106,6 +110,23 @@ export class ImportMultipleFiles extends TuneflowPlugin {
             duration: audioBuffer.duration,
           },
         });
+      } else if (this.isLrcFileType(fileExtension)) {
+        const lrcLib = await this.loadLrcLib();
+        const fileContent = await file.text();
+        const lyrics = lrcLib.Lrc.parse(fileContent);
+        for (let i = 0; i < lyrics.lyrics.length; i += 1) {
+          const lyricLineInfo = lyrics.lyrics[i];
+          const startTick = song.secondsToTick(lyricLineInfo.timestamp);
+          const nextLyricLineInfo =
+            i >= lyrics.lyrics.length - 1 ? undefined : lyrics.lyrics[i + 1];
+          const endTick = nextLyricLineInfo
+            ? song.secondsToTick(nextLyricLineInfo.timestamp) : startTick + song.getResolution() * 4;
+          await song.getLyrics().createLineFromString({
+            input: lyricLineInfo.content,
+            startTick,
+            endTick,
+          });
+        }
       }
     }
   }
@@ -118,16 +139,27 @@ export class ImportMultipleFiles extends TuneflowPlugin {
     return _.include(SUPPORTED_AUDIO_FORMATS, fileExtension);
   }
 
+  private isLrcFileType(fileExtension: string) {
+    return _.include(['lrc'], fileExtension);
+  }
+
   private getAllowedFileExtension(fileName: string, allowedFileTypes: string[]) {
     if (!fileName) {
       return null;
     }
     const parts = fileName.split('.');
-    const extension = parts[parts.length - 1];
+    const extension = parts[parts.length - 1].toLowerCase();
     if (!_.includes(allowedFileTypes, parts[parts.length - 1])) {
       return null;
     }
     return extension;
+  }
+
+  private async loadLrcLib() {
+    ImportMultipleFiles.lrcParserLibLoader =
+      ImportMultipleFiles.lrcParserLibLoader ||
+      lrcKitLib().then(lib => (lib.default ? lib.default : lib));
+    return ImportMultipleFiles.lrcParserLibLoader;
   }
 
   private async readAsAudioBuffer(fileBuffer: ArrayBuffer) {

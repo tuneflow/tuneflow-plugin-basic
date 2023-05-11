@@ -943,6 +943,22 @@
         "allowReset": false
       },
       "categories": ["import"]
+    },
+    {
+      "providerId": "andantei",
+      "providerDisplayName": {
+        "zh": "Andantei行板",
+        "en": "Andantei"
+      },
+      "pluginId": "apply-lyrics-time-offset",
+      "pluginDisplayName": {
+        "zh": "调整歌词时间",
+        "en": "Adjust Lyrics Global Time Offset"
+      },
+      "version": "1.0.0",
+      "options": {
+        "allowReset": false
+      }
     }
   ]
 }

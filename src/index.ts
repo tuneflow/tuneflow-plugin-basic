@@ -55,3 +55,4 @@ export { RemoveTrackSend } from './remove_track_send_plugin';
 export { UpdateTrackOutput } from './update_track_output_plugin';
 export { UpdateLyrics } from './update_lyric_plugin';
 export { ImportMultipleFiles } from './import_multiple_files_plugin';
+export { ApplyLyricsTimeOffset } from './apply_lyrics_time_offset';
